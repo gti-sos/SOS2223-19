@@ -3,5 +3,5 @@
 - **Team**
   - [Bruno Rico Barrillero](https://github.com/brico1994)
   - [Jose Luis Navarro Lopez-Montenegro](https://github.com/josnavlop4)
-- **Project description**: Nuestro trabajo consiste en el estudio de viajeros, pernoctaciones y estancia media por meses en las provincias de Andalucia y la ocupación en campings por meses en provincias de andalucia.
+- **Project description**: Our source of information are supposed to analize the relation between occupancy in rural tourism and occupancy in camping sites.
 - **Repository**: [gti-sos/SOS2223-19](https://github.com/gti-sos/SOS2223-19)
