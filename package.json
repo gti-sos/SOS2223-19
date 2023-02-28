@@ -1,0 +1,24 @@
+{
+  "name": "sos2223-19",
+  "version": "0.0.0",
+  "description": "- **Team**\r   - [Bruno Alvaro Rico Barrilero](https://github.com/brico1994)\r   - [Jose Luis Navarro Lopez-Montenegro](https://github.com/josnavlop4)\r - **Project description**: Our source of information are supposed to analize the relation between occupancy in rural tourism and occupancy in camping sites.\r - **Repository**: [gti-sos/SOS2223-19](https://github.com/gti-sos/SOS2223-19)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gti-sos/SOS2223-19.git"
+  },
+  "author": "josnavlop4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gti-sos/SOS2223-19/issues"
+  },
+  "homepage": "https://github.com/gti-sos/SOS2223-19#readme",
+  "dependencies": {
+    "cool-ascii-faces": "^1.3.4",
+    "express": "^4.18.2"
+  }
+}

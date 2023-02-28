@@ -92,7 +92,9 @@ function avgDatos(array,provincia, campo) {
     //array de objetos filtrados por provincia
     const objfiltro = array.filter(n => n.province === provincia);
     //agrupo solo los del campo especificado y los sumo todos
-    objfiltro.map(n=>n[campo]).forEach(v => {suma+=v;});
+    objfiltro.map(n=>n[campo]).forEach(v => {
+        suma+=v;
+    });
     //devuelvo la media
     return suma/objfiltro.length;
 }
