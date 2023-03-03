@@ -7,7 +7,7 @@ var port = process.env.PORT || 12345;
 //const media = require("./index-BRB")-----preguntar en clase si se puede
 
 //cool asci faces
-app.get("/faces",(req,res) =>{ //request,response
+app.get("/cool",(req,res) =>{ //request,response
     res.send(cool());
     console.log("->  New cool face request  <-");
 });
