@@ -111,3 +111,7 @@ function mediaGeografica(provincia,campo){
 }
 
 console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
+
+/*module.exports = {
+    "mediaGeografica": mediaGeografica
+}*/
