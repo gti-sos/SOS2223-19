@@ -2,11 +2,14 @@ var express = require("express");
 var cool = require("cool-ascii-faces");
 var operacion = require("./index-JLN");
 var mediaProvincia = require("./index-BRB");
+var mediaProvincia = require("./index-BRB");
 
 var app = express();
 var port = process.env.PORT || 12345;
 
-var mediaProvincia = require("./index-BRB");
+const BASE_API_URL = "/api/v1";
+
+
 
 //cool asci faces
 app.get("/cool",(req,res) =>{ //request,response
