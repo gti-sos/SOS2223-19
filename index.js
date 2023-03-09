@@ -1,11 +1,12 @@
 var express = require("express");
 var cool = require("cool-ascii-faces");
 var operacion = require("./index-JLN");
+var mediaProvincia = require("./index-BRB");
 
 var app = express();
 var port = process.env.PORT || 12345;
 
-//const media = require("./index-BRB")-----preguntar en clase si se puede
+
 
 //cool asci faces
 app.get("/cool",(req,res) =>{ //request,response
@@ -15,8 +16,8 @@ app.get("/cool",(req,res) =>{ //request,response
 
 //index brb
 app.get("/samples/BRB",(req,res) =>{
-    var media = mediaGeografica("Almeria","traveller");
-    res.send(`la media de viajeros en almeria es: ${media}`);
+    var mediaBruno = mediaProvincia.mediaGeografica("Almeria","traveller");
+    res.send(`la media de viajeros en almeria es: ${mediaBruno}`);
     console.log("->  media aritmetica almeria traveller  <-");
 });
 
@@ -34,7 +35,7 @@ app.listen(port,()=>{
     console.log(`Server ready in port ${port}`);
 });
 
-//funcion para calcular la media aritmetica mas datos del ejemplo
+/*/funcion para calcular la media aritmetica mas datos del ejemplo
 datosEjemplo = [
     {
         province: "Almeria",
@@ -146,4 +147,4 @@ function mediaGeografica(provincia,campo){
     return suma/datosEjemplo.length;
 }
 
-console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
+console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))*/
