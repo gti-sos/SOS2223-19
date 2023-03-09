@@ -1,5 +1,5 @@
 //funcion para calcular la media aritmetica de un 
-datosEjemplo = [
+datosEjemploBruno = [
     {
         province: "Almeria",
         month: "Enero",
@@ -112,6 +112,7 @@ function mediaGeografica(provincia,campo){
 
 console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
 
-/*module.exports = {
-    "mediaGeografica": mediaGeografica
-}*/
+module.exports = {
+    "mediaGeografica": mediaGeografica,
+    "datosBruno": datosEjemploBruno
+}
