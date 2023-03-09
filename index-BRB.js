@@ -1,5 +1,5 @@
 //funcion para calcular la media aritmetica de un 
-datosEjemploBruno = [
+datosEjemplo = [
     {
         province: "Almeria",
         month: "Enero",
