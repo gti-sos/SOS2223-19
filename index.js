@@ -1,24 +1,18 @@
 var express = require("express");
 var cool = require("cool-ascii-faces");
+var bodyParser = require("body-parser");
 
 var operacion = require("./index-JLN");
-<<<<<<< HEAD
+var mediaProvincia = require("./index-BRB");
+var mediaProvincia = require("./index-BRB");
 const { arrayDatos } = require("./index-JLN");
-=======
-var mediaProvincia = require("./index-BRB");
-var mediaProvincia = require("./index-BRB");
->>>>>>> 322f2a83f9bb25beb20b261a4814e9fe46e9f110
 
 var app = express();
 var port = process.env.PORT || 12345;
+app.use(bodyParser.json());
 
 const BASE_API_URL = "/api/v1";
 
-<<<<<<< HEAD
-//const media = require("./index-BRB")-----preguntar en clase si se puede
-=======
-
->>>>>>> 322f2a83f9bb25beb20b261a4814e9fe46e9f110
 
 //cool asci faces
 app.get("/cool",(req,res) =>{ //request,response
@@ -33,10 +27,26 @@ app.get("/samples/BRB",(req,res) =>{
     console.log("->  media aritmetica almeria traveller  <-");
 });
 
+/*---------------------------------------JLN-----------------------------------------------------------------------------*/
 //index jln
-app.get(BASE_API_URL+"/FFFF", (request,response)=>{
-    response.json(operacion.arrayDatos);
-    console.log("New request to /FFFF");
+app.get(BASE_API_URL+"/occupation-stats", (request,response)=>{
+    response.json(operacion.datosIni);
+    console.log("New request to /occupation-stats");
+    response.sendStatus(200);
+});
+
+var datosJLN = [];
+app.get(BASE_API_URL+"/occupation-stats/loadInitialData", (request,response)=>{
+    if (datosJLN.length==0){
+        datosJLN.push(operacion.datosIni);
+        response.json(datosJLN);
+        console.log("Carga de datos iniciales realizada");
+        response.sendStatus(201);
+    }else{
+        response.send("El array ya tiene datos");
+        console.log("El array ya tiene datos, tiene " + datosJLN.length);
+        
+    }
 });
 
 app.get("/samples/JLN",(req,res) =>{
@@ -47,126 +57,123 @@ app.get("/samples/JLN",(req,res) =>{
     console.log(`->  media aritmetica  ${pr} ${c} calculada  <-`);
 });
 
+// Tabla azul y códigos de la verde
+const JLN = BASE_API_URL+"/occupation-stats";
+app.post(JLN,(request,response)=>{
+    var newData = request.body;
+    const existe = operacion.arrayDatos.filter(dato=>dato.province === newData.province);
+    if (request.originalUrl!=JLN){
+        response.status(405).send("Metodo no permitido");
+        console.log("405");
+    }else{
+        if (!newData.province||!newData.month||!newData.traveler||!newData.overnight_stay||!newData.average_stay) {
+            response.status(400).send('Faltan campos requeridos en el objeto');
+            console.log("400");
+        }else{
+            if(existe){
+                response.status(409).send(`El objeto ya existe en el array`);
+                console.log("409");
+            }else{
+                console.log(`newData = <${JSON.stringify(newData,null,2)}>`); //verlo en la consola
+                console.log("New POST to /occupation-stats");
+                operacion.arrayDatos.push(newData);
+                response.sendStatus(201);
+            }
+        }
+    }
+});
+
+//obtener array de un valor de un campo en especifico
+app.get(JLN+"/:campo/:valor",(request,response)=>{
+    const campo = request.params.campo;
+    const valor = request.params.valor;
+    const arrayfiltrado = operacion.arrayDatos.filter(n=>n[campo] === valor);
+
+    if(arrayfiltrado.length === 0){
+        response.status(404).send(`No se encontraron datos con el campo "${campo}" igual a "${valor}"`);
+        console.log(404);
+    }else{
+        response.send(arrayfiltrado);
+        console.log(`New GET to /${campo}/${valor}`);
+        response.sendStatus(200);
+    }
+});
+
+//obtener array de un campo en especifico
+app.get(JLN +'/:campo', (request, response) => {
+    const campo = request.params.campo;
+
+    const lc = operacion.arrayDatos.map(c => c[campo]);
+    if (lc === 0) {
+      response.status(404).send(`No se encontraron datos con el campo "${campo}"`);
+      console.log(404);
+    } else {
+      response.send(lc);
+      console.log(`New GET to /${campo}`);
+      response.sendStatus(200);
+    }
+});
+
+//Actualizar dato en especifico
+app.put(JLN + `/:campo/:dato`,(request,response) => {
+    const campo = request.params.campo;
+    const dato = request.params.dato;
+
+    const objIndex = operacion.datosIni.find(n=>n.province === campo && n.month === dato);
+    if(objIndex === 0){
+        response.status(404).send(`No se encontraron datos con el campo ${campo}`);
+    }else{
+        if (!newData.province||!newData.month||!newData.traveler||!newData.overnight_stay||!newData.average_stay) {
+            response.status(400).send('Faltan campos requeridos en el objeto');
+            console.log("400");
+        }else{
+            const valoresNuevos = request.body;
+            for (let p in valoresNuevos) {
+                objIndex[p] = valoresNuevos[p];
+            }
+            response.send("Objeto actualizado correctamente");
+            console.log(`New PUT to /${campo}/${dato}`);
+            response.sendStatus(200);
+        }
+    }
+}); 
+
+app.put(JLN, (req, res) => {
+    res.status(405).send('Method not Allowed');
+    console.log(`Error 405 Method not Allowed`);
+
+});
+//Borrar un determinado campo
+app.delete(JLN + '/:campo', (request, response) => {
+    const campo = request.params.campo; 
+    const objetosFiltrados = operacion.datosIni.filter(objeto => objeto.hasOwnProperty(campo));
+    
+    if (objetosFiltrados.length === 0) {
+      response.status(404).send("No se encontraron objetos con ese campo");
+    }
+    operacion.datosIni = operacion.datosIni.filter(objeto => !objeto.hasOwnProperty(campo));
+    
+    response.status(200).send("Los objetos han sido eliminados exitosamente");
+  });
+
+//Borrar todos los que contengan un determinado valor del campo
+app.delete(JLN + '/:campo/:valor', (request, response) => {
+    const campo = request.params.campo; 
+    const valor = request.params.valor;
+
+    const objetosFiltrados = operacion.datosIni.filter(objeto => objeto.hasOwnProperty(campo)&& objeto[campo] === valor);
+    
+    if (objetosFiltrados.length === 0) {
+      response.status(404).send("No se encontraron objetos con ese campo");
+    }
+    operacion.datosIni = operacion.datosIni.filter(objeto => !objeto.hasOwnProperty(campo)|| objeto[campo] !== valor);
+    
+    response.status(200).send("Los objetos han sido eliminados exitosamente");
+
+});
+/*---------------------------------------JLN-----------------------------------------------------------------------------*/
 //escuchar el puerto
 app.listen(port,()=>{
     console.log(`Server ready in port ${port}`);
 });
 
-<<<<<<< HEAD
-//funcion para calcular la media aritmetica mas datos del ejemplo
-datosEjemplo = [
-    {
-        province: "Almeria",
-        month: "Enero",
-        traveller: 156.404958677,
-        overnigth_stay: 860.227272729,
-        average_stay: 5.500000000035170
-    },
-    {
-        province: "Almeria",
-        month: "Febrero",
-        traveller: 59.669421489,
-        overnigth_stay: 458.512396696,
-        average_stay: 7.68421052616584
-    },
-    {
-        province: "Almeria",
-        month: "Marzo",
-        traveller: 241.367588932,
-        overnigth_stay: 851.138339921,
-        average_stay: 3.5263157894856800
-    },
-    {
-        province: "Almeria",
-        month: "Abril",
-        traveller: 433.249011857,
-        overnigth_stay: 1290.04743083,
-        average_stay: 2.9776119403032800
-    },
-    {
-        province: "Almeria",
-        month: "Mayo",
-        traveller: 931.686746987,
-        overnigth_stay: 2781.983935743,
-        average_stay: 2.9859649122837800
-    },
-    {
-        province: "Almeria",
-        month: "Junio",
-        traveller: 2182.8502994,
-        overnigth_stay: 4924.562874252,
-        average_stay: 2.2560240963870100
-    },
-    {
-        province: "Almeria",
-        month: "Julio",
-        traveller: 3654.393063585,
-        overnigth_stay: 11929.393063585,
-        average_stay: 3.2643979057584300
-    },
-    {
-        province: "Almeria",
-        month: "Agosto",
-        traveller: 4193.304431599,
-        overnigth_stay: 15838.892100194,
-        average_stay: 3.777186311787590
-    },
-    {
-        province: "Almeria",
-        month: "Septiembre",
-        traveller: 2058.044444443,
-        overnigth_stay: 5633.237037037,
-        average_stay: 2.73717948718139 
-    },
-    {
-        province: "Almeria",
-        month: "Octubre",
-        traveller: 1637.339622641,
-        overnigth_stay: 4096.690566039,
-        average_stay: 2.502040816328080
-    },
-    {
-        province: "Almeria",
-        month: "Novuiembre",
-        traveller: 1106.229249013,
-        overnigth_stay: 2592.308300394,
-        average_stay: 2.3433734939723500
-    },
-    {
-        province: "Almeria",
-        month: "Diciembre",
-        traveller: 1754.936507937,
-        overnigth_stay: 4843.492063495,
-        average_stay: 2.75992438563417
-    }
-];
-
-
-function mediaGeografica(provincia,campo){
-    suma = 0;
-    //filtramos el array por provincia
-    datosEjemplo.filter(function(dato) {
-        return datosEjemplo.province == provincia
-    })
-    // seleccionamos el campo que queremos y sumamos sus componentes
-    if(campo == "traveller"){
-        datosEjemplo.forEach(element => {
-            suma += element.traveller
-        });
-    }else if(campo == "average_stay"){
-        datosEjemplo.forEach(element => {
-            suma += element.average_stay
-        });
-    }else{
-        datosEjemplo.forEach(element => {
-            suma += element.overnigth_stay
-        });
-    }
-    //dividimos por la longitud de la lista
-    return suma/datosEjemplo.length;
-}
-
-console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
-
-=======
->>>>>>> 322f2a83f9bb25beb20b261a4814e9fe46e9f110
