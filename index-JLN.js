@@ -1,4 +1,4 @@
-datosEjemplo = [
+var datosEjemplo = [
     {
         province: "Almeria",
         month: "Enero",

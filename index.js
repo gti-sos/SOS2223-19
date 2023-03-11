@@ -1,9 +1,13 @@
 var express = require("express");
 var cool = require("cool-ascii-faces");
+
 var operacion = require("./index-JLN");
+const { arrayDatos } = require("./index-JLN");
 
 var app = express();
 var port = process.env.PORT || 12345;
+
+const BASE_API_URL = "/api/v1";
 
 //const media = require("./index-BRB")-----preguntar en clase si se puede
 
@@ -21,6 +25,11 @@ app.get("/samples/BRB",(req,res) =>{
 });
 
 //index jln
+app.get(BASE_API_URL+"/FFFF", (request,response)=>{
+    response.json(operacion.arrayDatos);
+    console.log("New request to /FFFF");
+});
+
 app.get("/samples/JLN",(req,res) =>{
     pr = "Almeria";
     c = "traveler";
@@ -122,6 +131,7 @@ datosEjemplo = [
     }
 ];
 
+
 function mediaGeografica(provincia,campo){
     suma = 0;
     //filtramos el array por provincia
@@ -147,3 +157,4 @@ function mediaGeografica(provincia,campo){
 }
 
 console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
+
