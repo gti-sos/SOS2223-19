@@ -73,13 +73,14 @@ app.get(BASE_API_URL+"/occupation-stats", (request,response)=>{
 
 // Tabla azul y códigos de la verde
 const JLN = BASE_API_URL+"/occupation-stats";
+
 app.post(JLN,(request,response)=>{
     const newData = request.body;
-    if (request.originalUrl!=JLN){
+    if (request.originalUrl!=JLN){ 
         response.status(405).send("Metodo no permitido");
         console.log("405");
     }else{
-        if (!newData.province||!newData.month||!newData.traveler||!newData.overnight_stay||!newData.average_stay) {
+        if (!newData.province&&!newData.month&&!newData.traveler&&!newData.overnight_stay&&!newData.average_stay) {
             response.status(400).send('Faltan campos requeridos en el objeto');
             console.log("400");
         }else{
@@ -91,7 +92,7 @@ app.post(JLN,(request,response)=>{
                 console.log(`newData = <${JSON.stringify(newData,null,2)}>`); //verlo en la consola
                 console.log("New POST to /occupation-stats");
                 operacion.arrayDatos.push(newData);
-                response.sendStatus(201);
+                response.status(201).send("Created");
             }
         }
     }
@@ -165,7 +166,7 @@ app.delete(JLN + '/:campo', (request, response) => {
     }
     datosJLN = datosJLN.filter(objeto => !objeto.hasOwnProperty(campo));
     
-    response.status(200).send("Los objetos han sido eliminados exitosamente");
+    response.status(200).send("OK");
   });
 
 //Borrar todos los que contengan un determinado valor del campo
@@ -180,7 +181,7 @@ app.delete(JLN + '/:campo/:valor', (request, response) => {
     }
     datosJLN = datosJLN.filter(objeto => !objeto.hasOwnProperty(campo)|| objeto[campo] !== valor);
     
-    response.status(200).send("Los objetos han sido eliminados exitosamente");
+    response.status(200).send("OK");
 
 });
 /*---------------------------------------JLN-----------------------------------------------------------------------------*/
