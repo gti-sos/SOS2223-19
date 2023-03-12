@@ -103,6 +103,7 @@ pr = "Almeria";
 c = "traveler";
 console.log("La media de " + c + " en " + pr + " es de " + avgDatos(datosEjemplo,"Almeria","traveler") + " " + c + "s.");
 
+
 datosIni=[
     {
         province: "Almeria",

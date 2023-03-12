@@ -1,32 +1,15 @@
-var express = require("express");
-var cool = require("cool-ascii-faces");
+/*var express = require("express");
 var bodyParser = require("body-parser");
 
-var operacion = require("./modularizadoJLN/index-JLN");
-var mediaProvincia = require("./index-BRB");
-var mediaProvincia = require("./index-BRB");
+var operacion = require('../modularizadoJLN/index-JLN');
 
-var app = express();
-var port = process.env.PORT || 12345;
+//var app = express();
+const app = express.Router;
 app.use(bodyParser.json());
 
 const BASE_API_URL = "/api/v1";
 
 
-//cool asci faces
-app.get("/cool",(req,res) =>{ //request,response
-    res.send(cool());
-    console.log("->  New cool face request  <-");
-});
-
-//index brb
-app.get("/samples/BRB",(req,res) =>{
-    var media = mediaProvincia.mediaGeografica("Almeria","traveller");
-    res.send(`la media de viajeros en almeria es: ${media}`);
-    console.log("->  media aritmetica almeria traveller  <-");
-});
-
-/*---------------------------------------JLN-----------------------------------------------------------------------------*/
 //index jln
 app.get("/samples/JLN",(req,res) =>{
     pr = "Almeria";
@@ -63,7 +46,7 @@ app.get(BASE_API_URL+"/occupation-stats/loadInitialData", (request,response)=>{
         console.log("El array ya tiene datos, tiene " + datosJLN.length);
         console.log(409);
     }
-});*/
+});///////////////////////////////////////////////////////////////////
 
 app.get(BASE_API_URL+"/occupation-stats", (request,response)=>{
     response.json(operacion.arrayDatos);
@@ -182,10 +165,5 @@ app.delete(JLN + '/:campo/:valor', (request, response) => {
     
     response.status(200).send("Los objetos han sido eliminados exitosamente");
 
-});
-/*---------------------------------------JLN-----------------------------------------------------------------------------*/
-//escuchar el puerto
-app.listen(port,()=>{
-    console.log(`Server ready in port ${port}`);
-});
+});*/
 
