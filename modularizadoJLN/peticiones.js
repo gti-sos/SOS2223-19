@@ -1,62 +1,48 @@
-/*var express = require("express");
+var express = require("express");
 var bodyParser = require("body-parser");
 
-var operacion = require('../modularizadoJLN/index-JLN');
+var operacion = require('./index-JLN');
 
-//var app = express();
-const app = express.Router;
+var app = express();
+
 app.use(bodyParser.json());
 
 const BASE_API_URL = "/api/v1";
 
 
 //index jln
-app.get("/samples/JLN",(req,res) =>{
+const calculoMedia = (req,res) =>{
     pr = "Almeria";
     c = "traveler";
     var media = operacion.avgDatos(operacion.arrayDatos,pr, c);
     res.send("La media de " + c + " en " + pr + " es de " + media + " " + c + "s.");
     console.log(`->  media aritmetica  ${pr} ${c} calculada  <-`);
-});
+};
 
 var datosJLN = [];
-
-app.get(BASE_API_URL+"/occupation-stats/loadInitialData", (request, response) => {
-  if (datosJLN.length === 0) {
-    datosJLN.push(operacion.datosIni);
-    response.json(datosJLN);
-    console.log("Carga de datos iniciales realizada");
-    response.sendStatus(201);
-  } else {
-    response.status(409).send("El array ya tiene datos");
-    console.log("El array ya tiene datos, tiene " + datosJLN.length);
-    console.log(409);
-  }
-});
-/*
-var datosJLN = [];
-app.get(BASE_API_URL+"/occupation-stats/loadInitialData", (request,response)=>{
-    if (datosJLN.length==0){
-        datosJLN.push(operacion.datosIni);
-        response.json(datosJLN);
-        console.log("Carga de datos iniciales realizada");
-        response.sendStatus(201);
-    }else{
-        response.status(409).send("El array ya tiene datos");
-        console.log("El array ya tiene datos, tiene " + datosJLN.length);
-        console.log(409);
+const cargaInicial = (request, response) => {
+    if (datosJLN.length === 0) {
+      datosJLN.push(operacion.datosIni);
+      response.json(datosJLN);
+      console.log("Carga de datos iniciales realizada");
+      response.sendStatus(201);
+    } else {
+      response.status(409).send("El array ya tiene datos");
+      console.log("El array ya tiene datos, tiene " + datosJLN.length);
+      console.log(409);
     }
-});///////////////////////////////////////////////////////////////////
+};
 
-app.get(BASE_API_URL+"/occupation-stats", (request,response)=>{
+const cargaDatos = (request,response)=>{
     response.json(operacion.arrayDatos);
     console.log("New request to /occupation-stats");
     response.sendStatus(200);
-});
+};
 
 // Tabla azul y códigos de la verde
 const JLN = BASE_API_URL+"/occupation-stats";
-app.post(JLN,(request,response)=>{
+
+const postObjeto = (request,response)=>{
     const newData = request.body;
     if (request.originalUrl!=JLN){
         response.status(405).send("Metodo no permitido");
@@ -78,10 +64,10 @@ app.post(JLN,(request,response)=>{
             }
         }
     }
-});
+};
 
 //obtener array de un valor de un campo en especifico
-app.get(JLN+"/:campo/:valor",(request,response)=>{
+const cargaValorCampo = (request,response)=>{
     const campo = request.params.campo;
     const valor = request.params.valor;
     const arrayfiltrado = operacion.arrayDatos.filter(n=>n[campo] === valor);
@@ -94,10 +80,10 @@ app.get(JLN+"/:campo/:valor",(request,response)=>{
         console.log(`New GET to /${campo}/${valor}`);
         response.sendStatus(200);
     }
-});
+};
 
 //obtener array de un campo en especifico
-app.get(JLN + '/:campo', (request, response) => {
+const cargaListCampo = (request, response) => {
     const campo = request.params.campo;
     const lc = operacion.arrayDatos.filter(n => n.hasOwnProperty(campo)).map(c => c[campo]);
     if (lc.length === 0) {   
@@ -107,10 +93,11 @@ app.get(JLN + '/:campo', (request, response) => {
       response.send(lc);
       console.log(`New GET to /${campo}`);
     }
-});
+};
 
 //Actualizar dato en especifico
-app.put(JLN + `/:campo/:dato`,(request,response) => {
+
+const actualizarObj = (request,response) => {
     const campo = request.params.campo;
     const dato = request.params.dato;
     const valoresNuevos = request.body;
@@ -131,15 +118,15 @@ app.put(JLN + `/:campo/:dato`,(request,response) => {
             response.sendStatus(200);
         }
     }
-}); 
+};
 
-app.put(JLN, (req, res) => {
+const errActualizar = (req, res) => {
     res.status(405).send('Method not Allowed');
     console.log(`Error 405 Method not Allowed`);
+};
 
-});
 //Borrar un determinado campo
-app.delete(JLN + '/:campo', (request, response) => {
+const borrarCampo = (request, response) => {
     const campo = request.params.campo; 
     const objetosFiltrados = datosJLN.filter(objeto => objeto.hasOwnProperty(campo));
     
@@ -149,10 +136,10 @@ app.delete(JLN + '/:campo', (request, response) => {
     datosJLN = datosJLN.filter(objeto => !objeto.hasOwnProperty(campo));
     
     response.status(200).send("Los objetos han sido eliminados exitosamente");
-  });
+};
 
 //Borrar todos los que contengan un determinado valor del campo
-app.delete(JLN + '/:campo/:valor', (request, response) => {
+const borrarValorCampo = (request, response) => {
     const campo = request.params.campo; 
     const valor = request.params.valor;
 
@@ -165,5 +152,17 @@ app.delete(JLN + '/:campo/:valor', (request, response) => {
     
     response.status(200).send("Los objetos han sido eliminados exitosamente");
 
-});*/
+};
 
+module.exports = {
+    calculoMedia,
+    cargaInicial,
+    cargaDatos,
+    postObjeto,
+    cargaValorCampo,
+    cargaListCampo,
+    actualizarObj,
+    errActualizar,
+    borrarCampo,
+    borrarValorCampo
+};
