@@ -145,7 +145,7 @@ app.put(JLN + `/:campo/:dato`,(request,response) => {
             }
             response.send("Objeto actualizado correctamente");
             console.log(`New PUT to /${campo}/${dato}`);
-            response.sendStatus(200);
+            response.status(200).send("OK");
         }
     }
 }); 
