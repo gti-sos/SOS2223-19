@@ -191,6 +191,7 @@ datosIni=[
     }
 ];
 
+
 module.exports = {
     "avgDatos": avgDatos,
     "arrayDatos": datosEjemplo,
