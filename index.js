@@ -27,9 +27,14 @@ app.get("/samples/BRB",(req,res) =>{
     console.log("->  media aritmetica almeria traveller  <-");
 });
 
+
 /*---------------------------------------JLN-----------------------------------------------------------------------------*/
+
 app.use("",router);
+
 /*---------------------------------------JLN-----------------------------------------------------------------------------*/
+
+
 //escuchar el puerto
 app.listen(port,()=>{
     console.log(`Server ready in port ${port}`);

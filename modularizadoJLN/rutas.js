@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const peticiones = require('./peticiones');
+
 const BASE_API_URL = "/api/v1";
-const JLN = BASE_API_URL+"/occupation-stats";
+const JLN = BASE_API_URL + "/occupation-stats";
 
 router.get(JLN+"/samples/JLN",peticiones.calculoMedia);
 router.get(JLN,peticiones.cargaDatos);

@@ -8,7 +8,7 @@ var app = express();
 app.use(bodyParser.json());
 
 const BASE_API_URL = "/api/v1";
-
+const JLN = BASE_API_URL + "/occupation-stats";
 
 //index jln
 const camposObligatorios = ["province","month","traveler","overnight_stay","average_stay"];
@@ -24,10 +24,11 @@ const calculoMedia = (req,res) =>{
 var datosJLN = [];
 const cargaInicial = (request, response) => {
     if (datosJLN.length === 0) {
+      datosJLN.concat(operacion.datosIni);
       datosJLN.push(operacion.datosIni);
-      response.json(datosJLN);
       console.log("Carga de datos iniciales realizada");
       response.status(201).send("Created");
+      response.json(datosJLN);
     } else {
       response.status(409).send("CONFLICT, el array ya tiene datos");
       console.log("El array ya tiene datos, tiene " + datosJLN.length);
@@ -36,7 +37,7 @@ const cargaInicial = (request, response) => {
 };
 
 const cargaDatos = (request,response)=>{
-    response.json(operacion.arrayDatos);
+    response.json(operacion.datosIni);
     console.log("New request to /occupation-stats");
     response.status(200).send("OK");
 };
@@ -47,7 +48,6 @@ const cargaDatosJLN = (request,response)=>{
 };
 
 // Tabla azul y códigos de la verde
-const JLN = BASE_API_URL+"/occupation-stats";
 
 const postObjeto = (request,response)=>{
     const newData = request.body;
@@ -150,14 +150,12 @@ const borrarCampo = (request, response) => {
 const borrarValorCampo = (request, response) => {
     const campo = request.params.campo; 
     const valor = request.params.valor;
-
-    const objetosFiltrados = operacion.datosIni.filter(objeto => objeto.hasOwnProperty(campo) && objeto[campo] === valor);
-    if (objetosFiltrados.length === 0) {
-      response.status(404).send("NOT FOUND");
+    const objetosFiltrados = operacion.datosIni.filter(objeto => !(objeto[campo] === valor));
+    if (objetosFiltrados.length !== operacion.datosIni.length) {
+        operacion.datosIni =  objetosFiltrados;
+        response.status(200).send("OK");
     }
-    operacion.datosIni =  operacion.datosIni.filter(objeto => !(objeto.hasOwnProperty(campo) && objeto[campo] === valor));
-    
-    response.status(200).send("OK");
+    response.status(404).send("NOT FOUND");
 
 };
 
