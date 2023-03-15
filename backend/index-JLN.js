@@ -1,4 +1,4 @@
-var datosEjemplo = [
+datosEjemplo = [
     {
         province: "Almeria",
         month: "Enero",
@@ -84,26 +84,6 @@ var datosEjemplo = [
         average_stay: 7.09649626651152
     }
 ];
-
-function avgDatos(array,provincia, campo) {
-    
-    //acumulador
-    let suma = 0;
-    //array de objetos filtrados por provincia
-    const objfiltro = array.filter(n => n.province === provincia);
-    //agrupo solo los del campo especificado y los sumo todos
-    objfiltro.map(n=>n[campo]).forEach(v => {
-        suma+=v;
-    });
-    //devuelvo la media
-    return suma/objfiltro.length;
-}
-
-pr = "Almeria";
-c = "traveler";
-console.log("La media de " + c + " en " + pr + " es de " + avgDatos(datosEjemplo,"Almeria","traveler") + " " + c + "s.");
-
-
 datosIni=[
     {
         province: "Almeria",
@@ -190,10 +170,7 @@ datosIni=[
         average_stay: 7.09649626651152
     }
 ];
-
-
 module.exports = {
-    "avgDatos": avgDatos,
     "arrayDatos": datosEjemplo,
     "datosIni":datosIni
 }

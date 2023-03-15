@@ -1,24 +1,20 @@
 var express = require("express");
-var cool = require("cool-ascii-faces");
 var bodyParser = require("body-parser");
 
-var operacion = require("./modularizadoJLN/index-JLN");
 var mediaProvincia = require("./index-BRB");
 
 var app = express();
 var port = process.env.PORT || 12345;
-app.use(bodyParser.json());
 
-const router = require("./modularizadoJLN/rutas");
+app.use(bodyParser.json());
+app.use("/",express.static("./public"));
+
+const router = require("./backend/rutas");
 
 const BASE_API_URL = "/api/v1";
 
+app.use("",router); //modularizacion JLN
 
-//cool asci faces
-app.get("/cool",(req,res) =>{ //request,response
-    res.send(cool());
-    console.log("->  New cool face request  <-");
-});
 
 //index brb
 app.get("/samples/BRB",(req,res) =>{
@@ -28,11 +24,7 @@ app.get("/samples/BRB",(req,res) =>{
 });
 
 
-/*---------------------------------------JLN-----------------------------------------------------------------------------*/
 
-app.use("",router);
-
-/*---------------------------------------JLN-----------------------------------------------------------------------------*/
 
 
 //escuchar el puerto

@@ -7,4 +7,4 @@
 - **Repository**: [gti-sos/SOS2223-19](https://github.com/gti-sos/SOS2223-19)
 - **URL**: [http://sos2223-19.appspot.com/ ](http://sos2223-19.appspot.com/)
 - **APIs**:
-   - [http://sos2223-19.appspot.com/api/v1/occupation-stats/docs](http://sos2223-19.appspot.com/api/v1/occupation-stats/docs) (developed by [Jose Luis Navarro López-Montenegro](https://github.com/josnavlop4))
+   - [http://sos2223-19.appspot.com/api/v1/occupation-stats/arrayDatos](http://sos2223-19.appspot.com/api/v1/occupation-stats/arrayDatos) (developed by [Jose Luis Navarro López-Montenegro](https://github.com/josnavlop4))
