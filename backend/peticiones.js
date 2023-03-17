@@ -240,7 +240,7 @@ module.exports = {
     postObjeto,
     cargaValorCampo,
     cargaListCampo,
-    actualizarObj,
+    //actualizarObj,
     errActualizar,
     borrarCampo,
     borrarValorCampo,
