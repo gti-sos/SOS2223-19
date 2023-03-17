@@ -36,13 +36,15 @@ app.listen(port,()=>{
 
 //---------------------------------------BRB-------------------------------------------------------------------
 var datosBRB = [];
+const BRB_URL = BASE_API_URL + "/occupancy-of-accomodation-in-rural-tourism"
 
-app.get(BASE_API_URL+"/occupancy-of-accomodation-in-rural-tourism/loadInitialData", (request, response) => {
+app.get(BRB_URL +"/loadInitialData", (request, response) => {
     if (datosBRB.length === 0) {
+      datosBRB.concat(mediaProvincia.datosInicialesBruno);
       datosBRB.push(mediaProvincia.datosInicialesBruno);
-      response.json(datosBRB);
+      response.status(201).json(datosBRB);
       console.log("Carga de datos iniciales realizada");
-      response.sendStatus(201);
+     
     } else {
       response.status(409).send("El array ya tiene datos");
       console.log("El array ya tiene datos, tiene " + datosBRB.length);
@@ -50,13 +52,12 @@ app.get(BASE_API_URL+"/occupancy-of-accomodation-in-rural-tourism/loadInitialDat
     }
   });
 
-  app.get(BASE_API_URL+"/occupancy-of-accomodation-in-rural-tourism", (request,response)=>{
-    response.json(mediaProvincia.datosBruno);
+  app.get(BRB_URL, (request,response)=>{
+    response.status(200).json(datosBRB);
     console.log("New request to /occupancy-of-accomodation-in-rural-tourism");
-    response.sendStatus(200);
 });
 
-const BRB = BASE_API_URL+"/occupancy-of-accomodation-in-rural-tourism";
+
 
 
 
