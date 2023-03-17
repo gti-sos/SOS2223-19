@@ -57,7 +57,13 @@ app.get(BRB_URL +"/loadInitialData", (request, response) => {
     console.log("New request to /occupancy-of-accomodation-in-rural-tourism");
 });
 
+// tabla azul
 
+app.get(BRB_URL + ":province/:month", (req,res) => {
+    const PROVINCE = request.query.province;
+    const MONTH = request.query.province;
+    
+})
 
 
 
