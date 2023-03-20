@@ -3,6 +3,8 @@ var bodyParser = require("body-parser");
 
 var mediaProvincia = require("./index-BRB");
 
+
+
 var app = express();
 var port = process.env.PORT || 12345;
 
@@ -10,6 +12,7 @@ app.use(bodyParser.json());
 app.use("/",express.static("./public"));
 
 const router = require("./backend/rutas");
+const { response } = require("express");
 
 const BASE_API_URL = "/api/v1";
 
@@ -52,18 +55,39 @@ app.get(BRB_URL +"/loadInitialData", (request, response) => {
     }
   });
 
-  app.get(BRB_URL, (request,response)=>{
+
+
+// tabla azul
+
+  app.post(BRB_URL, (request,response)=>{
+    var nuevo = request.body;
     response.status(200).json(datosBRB);
     console.log("New request to /occupancy-of-accomodation-in-rural-tourism");
 });
 
-// tabla azul
+/*app.get(BRB_URL + "/province/month", (req,res) => {
+    const province = req.body;
+    const month = req.query.month;
+    const RECURSO = datosBRB.filter(n => n.hasOwnProperty(province) && n.hasOwnProperty(month));
+    /*datosBRB.findOne({province:province,month:month}, (err, array) => {
+      const lc = array.filter(n => n.hasOwnProperty(province) && n.hasOwnProperty(month));
+      if (err) {
+          res.status(500).send('INTERNAL SERVER ERROR');
+          console.log(err);
+      } else if(lc===0) {
+          res.status(404).send(`No se encontraron datos con el campo "${province}" igual a "${month}"`);
+          console.log(404);
+      }else{
+          res.send(lc);
 
-app.get(BRB_URL + ":province/:month", (req,res) => {
-    const PROVINCE = request.query.province;
-    const MONTH = request.query.province;
-    
-})
+          console.log(`Returned ${lc.length}`);
+      }
+  });
+    console.log(`recurso= <${JSON.stringify(province,null,2)}>`);
+    res.send(RECURSO);
+})*/
+
+
 
 
 
