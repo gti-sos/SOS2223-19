@@ -55,15 +55,64 @@ app.get(BRB_URL +"/loadInitialData", (request, response) => {
     }
   });
 
+  app.get(BRB_URL,(request,response)=>{
+    console.log("nuevo get a /occupancy");
+    response.status(201).json(datosBRB);
+});
+
 
 
 // tabla azul
-
+//-----------------------------POST------------------------------------------------------------
+const camposObligatoriosBRB = ["province","month","traveller","overnight_stay","average_stay"];
   app.post(BRB_URL, (request,response)=>{
     var nuevo = request.body;
-    response.status(200).json(datosBRB);
-    console.log("New request to /occupancy-of-accomodation-in-rural-tourism");
+    var existeObjeto = datosBRB.filter(function(dato) {
+      return datosBRB.province == nuevo.province && datosBRB.month == nuevo.month;
+    })
+  if(camposObligatoriosBRB.find((n) => !nuevo[n])) {
+    response.status(400).send('BAD REQUEST, faltan campos requeridos en el objeto');
+    console.log('400');
+
+  }else if (existeObjeto.length > 0) {
+      response.status(409).send('CONFLICT, el objeto ya existe en la base de datos');
+      console.log('409');
+  } else {
+      console.log(`newData = <${JSON.stringify(nuevo, null, 2)}>`);
+      console.log('New POST to /occupation-stats');
+      datosBRB.push(nuevo);
+      response.status(201).send('Created');
+  }
+  
 });
+
+app.post(BRB_URL +"/:campo",(req, res) => {
+  res.status(405).send('Method not Allowed');
+  console.log(`Error 405 Method not Allowed`);
+});
+
+//-------------------------PUT-------------------
+app.put(BRB_URL+"/:campo/:dato",(request,response) => {
+       const campo = request.params.campo;
+       const dato = request.params.dato;
+       const newData = request.body;
+  
+       const objIndex =  mediaProvincia.datosBruno.find(n=>n.province === campo && n.month === dato);
+       if(objIndex === 0){
+           response.status(404).send(`No se encontraron datos con el campo ${campo}`);
+       }else{
+           if (camposObligatoriosBRB.find(n => !newData[n])) {
+               response.status(400).send('BAD REQUEST');
+               console.log("400");
+           }else{
+               for (let p in newData) {
+                   objIndex[p] = newData[p];
+               }
+               console.log(`New PUT to /${campo}/${dato}`);
+               response.status(200).send("OK");
+           }
+       }
+   });
 
 /*app.get(BRB_URL + "/province/month", (req,res) => {
     const province = req.body;
