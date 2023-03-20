@@ -12,7 +12,7 @@ router.get(JLN,peticiones.cargaValorCampo);
 router.get(JLN,peticiones.cargaListCampo);
 router.post(JLN,peticiones.postObjeto);
 router.post(JLN+'/:campo',peticiones.errPosteo);
-// router.put(JLN+'/:campo/:dato',peticiones.actualizarObj);
+//router.put(JLN+'/:campo/:dato',peticiones.actualizarObj);
 router.put(JLN,peticiones.errActualizar);
 router.delete(JLN+ '/:campo',peticiones.borrarCampo);
 router.delete(JLN+ '/:campo/:valor',peticiones.borrarValorCampo);
