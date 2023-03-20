@@ -15,7 +15,6 @@ const BASE_API_URL = "/api/v1";
 
 app.use("",router); //modularizacion JLN
 
-
 //index brb
 app.get("/samples/BRB",(req,res) =>{
     var media = mediaProvincia.mediaGeografica("Almeria","traveller");
