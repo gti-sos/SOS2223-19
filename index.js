@@ -113,30 +113,32 @@ app.put(BRB_URL+"/:province/:month",(request,response) => {
    });
 
 app.put(BRB_URL, (req,res)=>{
-
+  res.status(405).send('Method not Allowed');
+  console.log(`Error 405 Method not Allowed`);
 })
 
-/*app.get(BRB_URL + "/province/month", (req,res) => {
-    const province = req.body;
-    const month = req.query.month;
-    const RECURSO = datosBRB.filter(n => n.hasOwnProperty(province) && n.hasOwnProperty(month));
+app.get(BRB_URL + "/:province/:month", (req,res) => {
+    const province = req.params.province;
+    const month = req.params.month;
+    const RECURSO = datosBRB.filter(function(dato) {
+      return datosBRB.province == province && datosBRB.month == month;
+    });
+    console.log(RECURSO);
+    //const lc = array.filter(n => n.hasOwnProperty(province) && n.hasOwnProperty(month));
     /*datosBRB.findOne({province:province,month:month}, (err, array) => {
       const lc = array.filter(n => n.hasOwnProperty(province) && n.hasOwnProperty(month));
       if (err) {
           res.status(500).send('INTERNAL SERVER ERROR');
           console.log(err);
-      } else if(lc===0) {
+      } else*/ if(RECURSO.length===0) {
           res.status(404).send(`No se encontraron datos con el campo "${province}" igual a "${month}"`);
           console.log(404);
       }else{
-          res.send(lc);
+          res.send(RECURSO);
 
-          console.log(`Returned ${lc.length}`);
+          console.log(`Returned ${RECURSO.length}`);
       }
   });
-    console.log(`recurso= <${JSON.stringify(province,null,2)}>`);
-    res.send(RECURSO);
-})*/
 
 
 
