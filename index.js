@@ -115,6 +115,28 @@ app.put(BRB_URL+"/:province/:month",(request,response) => {
 app.put(BRB_URL, (req,res)=>{
   res.status(405).send('Method not Allowed');
   console.log(`Error 405 Method not Allowed`);
+});
+
+app.delete(BRB_URL+"/:campo", (req,res)=>{
+  const campo = request.params.campo; 
+  const objetosFiltrados = mediaProvincia.datosInicialesBruno.filter(objeto => !objeto.hasOwnProperty(campo));
+    if(objetosFiltrados.length !== mediaProvincia.datosInicialesBruno.length){
+        mediaProvincia.datosInicialesBruno = objetosFiltrados;
+        response.status(200).send("OK");
+    }else{
+        response.status(404).send("NOT FOUND");
+    }
+});
+
+app.delete(BRB_URL + "/:campo/:valor", (req,res)=>{
+  const campo = request.params.campo; 
+  const valor = request.params.valor;
+  const objetosFiltrados = mediaProvincia.datosInicialesBruno.filter(objeto => !(objeto[campo] === valor));
+  if (objetosFiltrados.length !== mediaProvincia.datosInicialesBruno.length) {
+      mediaProvincia.datosInicialesBruno =  objetosFiltrados;
+      response.status(200).send("OK");
+  }
+  response.status(404).send("NOT FOUND");
 })
 
 app.get(BRB_URL + "/:province/:month", (req,res) => {
