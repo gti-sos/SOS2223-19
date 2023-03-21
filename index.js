@@ -86,14 +86,18 @@ app.post(BRB_URL +"/:campo",(req, res) => {
 });
 
 //-------------------------PUT-------------------
-app.put(BRB_URL+"/:campo/:dato",(request,response) => {
-       const campo = request.params.campo;
-       const dato = request.params.dato;
+app.put(BRB_URL+"/:province/:month",(request,response) => {
+       const provincia = request.params.province;
+       const mes = request.params.month;
        const newData = request.body;
-  
-       const objIndex =  mediaProvincia.datosBruno.find(n=>n.province === campo && n.month === dato);
-       if(objIndex === 0){
-           response.status(404).send(`No se encontraron datos con el campo ${campo}`);
+       console.log(provincia+mes);
+       //const objIndex =  datosBRB.find(n=>n.province == provincia && n.month == mes);
+       var objIndex = datosBRB.filter(function(dato) {
+        return datosBRB.province == provincia && datosBRBmonth == mes;
+      });
+      //console.log(objIndex + objIndex.length);    
+       if(objIndex.length === 0){
+           response.status(404).send(`No se encontraron datos con el campo ${provincia}`);
        }else{
            if (camposObligatoriosBRB.find(n => !newData[n])) {
                response.status(400).send('BAD REQUEST');
@@ -102,11 +106,15 @@ app.put(BRB_URL+"/:campo/:dato",(request,response) => {
                for (let p in newData) {
                    objIndex[p] = newData[p];
                }
-               console.log(`New PUT to /${campo}/${dato}`);
-               response.status(200).send("OK");
+               console.log(`New PUT to /${provincia}/${mes}`);
+               response.status(200).send('ok');
            }
        }
    });
+
+app.put(BRB_URL, (req,res)=>{
+
+})
 
 /*app.get(BRB_URL + "/province/month", (req,res) => {
     const province = req.body;
