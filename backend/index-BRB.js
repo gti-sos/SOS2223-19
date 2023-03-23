@@ -177,33 +177,9 @@ datosInicialesBruno = [
     }
 ];
 
-function mediaGeografica(provincia,campo){
-    suma = 0;
-    //filtramos el array por provincia
-    datosEjemplo.filter(function(dato) {
-        return datosEjemplo.province == provincia
-    })
-    // seleccionamos el campo que queremos y sumamos sus componentes
-    if(campo == "traveller"){
-        datosEjemplo.forEach(element => {
-            suma += element.traveller
-        });
-    }else if(campo == "average_stay"){
-        datosEjemplo.forEach(element => {
-            suma += element.average_stay
-        });
-    }else{
-        datosEjemplo.forEach(element => {
-            suma += element.overnight_stay
-        });
-    }
-    //dividimos por la longitud de la lista
-    return suma/datosEjemplo.length;
-}
-console.log("media aritmetica de almeria y traveler: " + mediaGeografica("Almeria","traveller"))
+
 
 module.exports = {
-    "mediaGeografica": mediaGeografica,
     "datosBruno" : datosEjemplo,
     "datosInicialesBruno" : datosInicialesBruno
 }
