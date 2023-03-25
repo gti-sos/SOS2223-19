@@ -43,7 +43,7 @@ module.exports = (app) => {
                 console.log(`error geting /occupancy: ${err}`);
                 response.sendStatus(500);
             } else {
-                response.status(201).json(dato.map((c) => {
+                response.status(200).json(dato.map((c) => {
                     delete c._id;
                     return c;
                 }));
@@ -60,7 +60,7 @@ module.exports = (app) => {
                 console.log(`error geting /occupancy: ${err}`);
                 response.sendStatus(500);
             } else {
-                response.status(201).json(dato.map((c) => {
+                response.status(200).json(dato.map((c) => {
                     delete c._id;
                     return c;
                 }));
