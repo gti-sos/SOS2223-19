@@ -44,9 +44,9 @@ module.exports = (app) => {
             } else if (dato.length === 0) {
                 for (var i = 0; i < arrayBRB.datosInicialesBruno.length; i++) {
                     ddbb.insert(arrayBRB.datosInicialesBruno[i]);
-                    response.sendStatus(201);
-                    console.log("se han cargado los datos iniciales");
                 }
+                response.sendStatus(201);
+                console.log("se han cargado los datos iniciales");
             } else {
                 response.status(409).send("ya existen los datos");
                 console.log(`existen ${dato.length} datos`);
