@@ -35,6 +35,26 @@ module.exports = (app) => {
         });
     });
 
+    
+    app.get(BRB_URL + "/loadInitialData", (request, response) => {
+        ddbb.find({}, (err, dato) => {
+            if (err) {
+                console.log(`error geting /occupancy: ${err}`);
+                response.sendStatus(500);
+            } else if (dato.length === 0) {
+                for (var i; i < arrayBRB.datosBruno; i++) {
+                    ddbb.insert(arrayBRB.datosBruno[i]);
+                    response.sendStatus(200);
+                    console.log("se han cargado los datos iniciales");
+                }
+            } else {
+                response.status(409).send("ya existen los datos");
+                console.log(`existen ${dato.length} datos`);
+            }
+        }
+        );
+    });
+
     app.get(BRB_URL+"/:province", (request, response) => {
         var provincia = request.params.province
         console.log(`nuevo get a ${provincia}`);
@@ -68,24 +88,6 @@ module.exports = (app) => {
         });
     });
 
-    app.get(BRB_URL + "/loadInitialData", (request, response) => {
-        ddbb.find({}, (err, dato) => {
-            if (err) {
-                console.log(`error geting /occupancy: ${err}`);
-                response.sendStatus(500);
-            } else if (dato.length === 0) {
-                for (var i; i < arrayBRB.datosBruno; i++) {
-                    ddbb.insert(arrayBRB.datosBruno[i]);
-                    response.sendStatus(200);
-                    console.log("se han cargado los datos iniciales");
-                }
-            } else {
-                response.status(409).send("ya existen los datos");
-                console.log(`existen ${dato.length} datos`);
-            }
-        }
-        );
-    });
 
     //-------------------------------------POSTS----------------------------------------------------------
     const camposObligatoriosBRB = ["province", "month", "traveller", "overnight_stay", "average_stay"];
