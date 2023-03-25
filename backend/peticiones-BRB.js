@@ -16,6 +16,10 @@ const BRB_URL = BASE_API_URL + "/occupancy-of-accomodation-in-rural-tourism";
 
 module.exports = (app) => {
     //-----------------------------------------gets-------------------------------------------------------------
+    app.get(BRB_URL+"/docs",(req,res)=>{
+        res.redirect("https://documenter.getpostman.com/view/25989970/2s93RNyEu7");
+    })
+
     app.get(BRB_URL, (request, response) => {
         console.log("nuevo get a /occupancy");
         ddbb.find({}, (err, dato) => {
