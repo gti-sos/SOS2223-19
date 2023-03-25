@@ -42,9 +42,9 @@ module.exports = (app) => {
                 console.log(`error geting /occupancy: ${err}`);
                 response.sendStatus(500);
             } else if (dato.length === 0) {
-                for (var i; i < arrayBRB.datosBruno; i++) {
-                    ddbb.insert(arrayBRB.datosBruno[i]);
-                    response.sendStatus(200);
+                for (var i = 0; i < arrayBRB.datosInicialesBruno.length; i++) {
+                    ddbb.insert(arrayBRB.datosInicialesBruno[i]);
+                    response.sendStatus(201);
                     console.log("se han cargado los datos iniciales");
                 }
             } else {
