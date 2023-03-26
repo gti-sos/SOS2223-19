@@ -19,6 +19,8 @@ jobs:
 
       - run: npm run test-occupation-stats
 
+      - run: npm run test-BRB
+
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
