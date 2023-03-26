@@ -1,0 +1,583 @@
+{
+	"info": {
+		"_postman_id": "72aa2b7d-21f5-4798-a6ae-08bb93adda3e",
+		"name": "localhost",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25989970"
+	},
+	"item": [
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of 12\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(12);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of Almeria: 11\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(11);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria/Enero",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of Almeria Enero: 1\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(1);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria/Enero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria",
+						"Enero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria/enero",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Almeria\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria/Enero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria",
+						"Enero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Almeria\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Almeria\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "occupancy-of-accomodation-in-rural-tourism",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Cordoba\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of 13\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(13);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria/Enero",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria/Febrero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria",
+						"Febrero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of 12\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(12);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/Almeria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of 2\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(2);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism Copy 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"length of 0\", function () {\r",
+							"    var jasonData = pm.response.json();\r",
+							"    pm.expect(jasonData).to.have.lengthOf(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/occupancy-of-accomodation-in-rural-tourism Copy 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/loadInitialData",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -71,8 +71,8 @@ datosEjemplo = [
         average_stay: 2.502040816328080
     },
     {
-        province: "Almeria",
-        month: "Novuiembre",
+        province: "Cordoba",
+        month: "Noviembre",
         traveller: 1106.229249013,
         overnight_stay: 2592.308300394,
         average_stay: 2.3433734939723500
@@ -162,8 +162,8 @@ datosInicialesBruno = [
         average_stay: 2.502040816328080
     },
     {
-        province: "Almeria",
-        month: "Novuiembre",
+        province: "Cordoba",
+        month: "Noviembre",
         traveller: 1106.229249013,
         overnight_stay: 2592.308300394,
         average_stay: 2.3433734939723500
