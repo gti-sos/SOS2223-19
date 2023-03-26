@@ -1,7 +1,7 @@
 # .github/workflows/deploy.yml
 name: Deploy to Cloud Run
 on:
-  merge:
+  push:
     branches:
       - main
 
