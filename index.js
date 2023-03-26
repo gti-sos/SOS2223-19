@@ -3,6 +3,8 @@ var bodyParser = require("body-parser");
 
 var mediaProvincia = require("./index-BRB");
 
+var backendJLN = require('./backend/peticiones');
+
 
 
 var app = express();
@@ -11,12 +13,11 @@ var port = process.env.PORT || 12345;
 app.use(bodyParser.json());
 app.use("/", express.static("./public"));
 
-const router = require("./backend/rutas");
 const { response } = require("express");
 
 const BASE_API_URL = "/api/v1";
 
-app.use("", router); //modularizacion JLN
+backendJLN(app); //modularizacion JLN
 
 
 

@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "a1b0a7d0-ec0e-4033-95e7-6481c8448757",
+		"name": "API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25975387"
+	},
+	"item": [
+		{
+			"name": "carga inicial",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats/loadInitialData",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats",
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mostrar datos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats/Almeria/Febrero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats",
+						"Almeria",
+						"Febrero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"province\": \"Almeria\",\r\n    \"month\": \"jddiisiwhfosodfdsoif\",\r\n    \"traveler\": 3,\r\n    \"overnight_stay\": 3,\r\n    \"average_stay\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats/Almeria/Febrero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats",
+						"Almeria",
+						"Febrero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"province\": \"aaaaaaaaaaa\",\r\n    \"month\": \"Mesalterno25657\",\r\n    \"traveler\": 1,\r\n    \"overnight_stay\": 1,\r\n    \"average_stay\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar por campo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats/province",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats",
+						"province"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar por campo valor",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URLBASE}}/occupation-stats/month/Febrero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"occupation-stats",
+						"month",
+						"Febrero"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
