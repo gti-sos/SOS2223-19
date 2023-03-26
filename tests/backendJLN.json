@@ -227,8 +227,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -267,8 +267,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -342,8 +342,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -381,8 +381,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -402,13 +402,18 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats/Almeria",
+					"raw": "{{URLBASE}}/occupation-stats?province=Almeria",
 					"host": [
 						"{{URLBASE}}"
 					],
 					"path": [
-						"occupation-stats",
-						"Almeria"
+						"occupation-stats"
+					],
+					"query": [
+						{
+							"key": "province",
+							"value": "Almeria"
+						}
 					]
 				}
 			},
@@ -421,8 +426,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -579,8 +584,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -592,7 +597,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"province\": \"Almeria\",\r\n    \"month\": \"jddiisiwhfosodfdsoif\",\r\n    \"traveler\": 3,\r\n    \"overnight_stay\": 3,\r\n    \"average_stay\": 3\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -628,8 +633,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -668,8 +673,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -689,7 +694,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats?province=aaaaaaaaaaa&month=AAAAAAA",
+					"raw": "{{URLBASE}}/occupation-stats?province=Enero&month=Almeria",
 					"host": [
 						"{{URLBASE}}"
 					],
@@ -699,11 +704,11 @@
 					"query": [
 						{
 							"key": "province",
-							"value": "aaaaaaaaaaa"
+							"value": "Enero"
 						},
 						{
 							"key": "month",
-							"value": "AAAAAAA"
+							"value": "Almeria"
 						}
 					]
 				}
@@ -779,8 +784,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
 							"});"
 						],
 						"type": "text/javascript"
