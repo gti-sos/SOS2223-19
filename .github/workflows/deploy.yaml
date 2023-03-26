@@ -1,14 +1,14 @@
 # .github/workflows/deploy.yml
 name: Deploy to Cloud Run
 on:
-  push:
+  merge:
     branches:
       - main
 
 jobs:
   deploy:
     name: Deploy to Google Cloud Run
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: production
     steps:
       - uses: actions/checkout@v2
