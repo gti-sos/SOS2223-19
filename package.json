@@ -7,7 +7,7 @@
     "start": "node index.js",
     "test-BRB": "npx newman run tests/test-BRB-backend.json -e tests/env/localhost.json",
     "test-occupation-stats": "npx newman run tests/backendJLN.json -e tests/env/localhost.json",
-    "test": "npm run test-occupation-stats"
+    "test": "npm run test-occupation-stats && npm run test-BRB"
   },
   "repository": {
     "type": "git",
