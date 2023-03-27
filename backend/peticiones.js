@@ -23,12 +23,7 @@ module.exports = (app) => {
     app.post(JLN, (request, response) => {
         const newData = request.body;
 
-        if (request.originalUrl !== "/api/v1/occupation-stats") {
-            response.status(405).send('METHOD NOT ALLOWED');
-            console.log('405');
-            return;
-        
-        } else if (camposObligatorios.find((n) => !newData[n])) {
+        if (camposObligatorios.find((n) => !newData[n])) {
                 response.status(400).send('BAD request, faltan campos requestueridos en el objeto');
                 console.log('400');
 
@@ -56,6 +51,15 @@ module.exports = (app) => {
         }
     });
 
+    app.post(JLN+'/:province', (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
+    });
+
+    app.post(JLN+'/:province/:month', (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
+    });
 
     //obtener array de un valor de un campo en especifico
     app.get(JLN + '', (request, response) => {
@@ -290,8 +294,8 @@ module.exports = (app) => {
 
 
     //Actualizar dato en especifico
-    app.put(JLN, (request, response) => {
-        const { province, month } = request.query;
+    app.put(JLN+'/:province/:month', (request, response) => {
+        const { province, month } = request.params;
         const newData = request.body;
 
         if(!(province && month)){
@@ -322,6 +326,11 @@ module.exports = (app) => {
                 }
             });
         }
+    });
+
+    app.put(JLN, (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
     });
 
     //Borrar un determinado dato
