@@ -120,7 +120,7 @@ module.exports = (app) => {
 
             if (province && month) {
                 console.log(`New request to /occupation-stats?province="${province}"&month="${month}"`);
-                db.findOne({ province: province, month: month }, (err, array) => {
+                db.findOne({ province: province, month: month },{_id: 0}, (err, array) => {
                     if (err) {
                         response.status(500).send("INTERNAL SERVER ERROR");
                         console.log(err);
@@ -132,10 +132,6 @@ module.exports = (app) => {
                         );
                         console.log(404);
                     } else {
-                        array.map((n) => {
-                            delete n._id;
-                            return n;
-                        }); 
                         if(array.length == 1){
                             response.send(array[0]);
                         }else{
@@ -292,6 +288,10 @@ module.exports = (app) => {
         }
     });
 
+    app.get(JLN + '/:province/:month', (request, response) => {
+        const province = request.params.province;
+        const month = request.params.month;
+    });
 
     //Actualizar dato en especifico
     app.put(JLN+'/:province/:month', (request, response) => {
