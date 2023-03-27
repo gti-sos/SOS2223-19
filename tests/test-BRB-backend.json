@@ -167,6 +167,51 @@
 			"response": []
 		},
 		{
+			"name": "/Almeria/enero Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Almeria\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism/Almeria/Enero",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism",
+						"Almeria",
+						"Enero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/occupancy-of-accomodation-in-rural-tourism",
 			"event": [
 				{
@@ -252,6 +297,48 @@
 		},
 		{
 			"name": "occupancy-of-accomodation-in-rural-tourism",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"province\": \"Cordoba\",\r\n        \"month\": \"Enero\",\r\n        \"traveller\": 4.9,\r\n        \"overnight_stay\": 4843.492063495,\r\n        \"average_stay\": 2.75992438563417\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URLBASE}}/api/v1/occupancy-of-accomodation-in-rural-tourism",
+					"host": [
+						"{{URLBASE}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"occupancy-of-accomodation-in-rural-tourism"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "occupancy-of-accomodation-in-rural-tourism Copy",
 			"event": [
 				{
 					"listen": "test",
