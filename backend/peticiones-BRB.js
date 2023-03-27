@@ -278,6 +278,9 @@ module.exports = (app) => {
             if (err) {
                 console.log(`error geting /occupancy: ${err}`);
                 response.sendStatus(500);
+            }else if (dato.length === 0) {
+                console.log(`error geting /occupancy: element not found`);
+                response.sendStatus(404);
             } else {
                 response.status(200).json(dato.map((c) => {
                     delete c._id;
@@ -296,10 +299,8 @@ module.exports = (app) => {
                 console.log(`error geting /occupancy: ${err}`);
                 response.sendStatus(500);
             } else {
-                response.status(200).json(dato.map((c) => {
-                    delete c._id;
-                    return c;
-                }));
+                delete dato[0]._id;
+                response.status(200).send(JSON.stringify(dato[0], null, 2));;
             }
         });
     });
