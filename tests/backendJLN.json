@@ -429,18 +429,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats?province=Almeria",
+					"raw": "{{URLBASE}}/occupation-stats/Almeria/traveler",
 					"host": [
 						"{{URLBASE}}"
 					],
 					"path": [
-						"occupation-stats"
-					],
-					"query": [
-						{
-							"key": "province",
-							"value": "Almeria"
-						}
+						"occupation-stats",
+						"Almeria",
+						"traveler"
 					]
 				}
 			},
@@ -588,22 +584,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats?province=aaaaaaaaaaa&month=Mesalterno25657",
+					"raw": "{{URLBASE}}/occupation-stats/aaaaaaaaaaa/Mesalterno25657",
 					"host": [
 						"{{URLBASE}}"
 					],
 					"path": [
-						"occupation-stats"
-					],
-					"query": [
-						{
-							"key": "province",
-							"value": "aaaaaaaaaaa"
-						},
-						{
-							"key": "month",
-							"value": "Mesalterno25657"
-						}
+						"occupation-stats",
+						"aaaaaaaaaaa",
+						"Mesalterno25657"
 					]
 				}
 			},
@@ -637,22 +625,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats?province=aaaaaaaaaaa&month=Mesalterno25657",
+					"raw": "{{URLBASE}}/occupation-stats/aaaaaaaaaaa/Mesalterno25657",
 					"host": [
 						"{{URLBASE}}"
 					],
 					"path": [
-						"occupation-stats"
-					],
-					"query": [
-						{
-							"key": "province",
-							"value": "aaaaaaaaaaa"
-						},
-						{
-							"key": "month",
-							"value": "Mesalterno25657"
-						}
+						"occupation-stats",
+						"aaaaaaaaaaa",
+						"Mesalterno25657"
 					]
 				}
 			},
@@ -726,22 +706,14 @@
 					}
 				},
 				"url": {
-					"raw": "{{URLBASE}}/occupation-stats?province=Enero&month=Almeria",
+					"raw": "{{URLBASE}}/occupation-stats/Enero/Almeria",
 					"host": [
 						"{{URLBASE}}"
 					],
 					"path": [
-						"occupation-stats"
-					],
-					"query": [
-						{
-							"key": "province",
-							"value": "Enero"
-						},
-						{
-							"key": "month",
-							"value": "Almeria"
-						}
+						"occupation-stats",
+						"Enero",
+						"Almeria"
 					]
 				}
 			},
