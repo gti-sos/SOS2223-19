@@ -15,6 +15,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Occupation-stats greater than 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.lengthOf.above(0);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -45,7 +50,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"pm.test(\"contine el mes buscado\",function(){\r",
+							"    pm.expect(pm.response.text()).contains(\"Enero\");\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -81,7 +90,12 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.test(\"contine el average_stay buscado\",function(){\r",
+							"    pm.expect(pm.response.text()).contains(\"5.5644878537467\");\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -117,7 +131,13 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.test(\"contine el overnight_stay buscado\",function(){\r",
+							"    pm.expect(pm.response.text()).contains(\"61046.000000001\");\r",
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -153,7 +173,12 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.test(\"contine el traveler buscado\",function(){\r",
+							"    pm.expect(pm.response.text()).contains(\"32583.999999996\");\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -189,7 +214,9 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -467,7 +494,12 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.test(\"contine la provincia buscada\",function(){\r",
+							"    pm.expect(pm.response.text()).contains(\"aaaaaaaaaaa\");\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -504,9 +536,9 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Occupation-stats greater than 0\", function () {\r",
+							"pm.test(\"Occupation-stats greater than 1\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData).to.have.a.lengthOf.above(0);\r",
+							"    pm.expect(jsonData).to.have.a.lengthOf.above(1);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -724,6 +756,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Occupation-stats greater than 1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.a.lengthOf.above(1);\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -819,36 +856,9 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URLBASE}}/occupation-stats",
-					"host": [
-						"{{URLBASE}}"
-					],
-					"path": [
-						"occupation-stats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Borrar todos",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"pm.test(\"no contine el mes del objeto borrado\",function(){\r",
+							"    pm.expect(pm.response.text()).not.contains(\"jddiisiwhfosodfdsoif\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -856,37 +866,6 @@
 				}
 			],
 			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{URLBASE}}/occupation-stats",
-					"host": [
-						"{{URLBASE}}"
-					],
-					"path": [
-						"occupation-stats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "mostrar datos 5",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -896,38 +875,6 @@
 					],
 					"path": [
 						"occupation-stats"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "carga inicial",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URLBASE}}/occupation-stats/loadInitialData",
-					"host": [
-						"{{URLBASE}}"
-					],
-					"path": [
-						"occupation-stats",
-						"loadInitialData"
 					]
 				}
 			},
