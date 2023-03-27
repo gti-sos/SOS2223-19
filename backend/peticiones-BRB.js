@@ -20,20 +20,6 @@ module.exports = (app) => {
         res.redirect("https://documenter.getpostman.com/view/25989970/2s93RNyEu7");
     })
 
-    /*app.get(BRB_URL, (request, response) => {
-        console.log("nuevo get a /occupancy");
-        ddbb.find({}, (err, dato) => {
-            if (err) {
-                console.log(`error geting /occupancy: ${err}`);
-                response.sendStatus(500);
-            } else {
-                response.status(200).json(dato.map((c) => {
-                    delete c._id;
-                    return c;
-                }));
-            }
-        });
-    });*/
 
     app.get(BRB_URL + '', (request, response) => {
         const query = request.query;
