@@ -352,7 +352,7 @@ module.exports = (app) => {
                 console.log(dato);
                 res.status(404).send(`No se encontraron datos con el campo ${provincia}`);
             } else if (camposObligatoriosBRB.find((n) => !nuevo[n])) {
-                res.status(400).send('BAD REQUEST, faltan campos requeridos en el objeto');
+                res.status(400).send('BAD REQUEST, campos incorrectos en el objeto');
                 console.log('400');
             }else if(provincia !== nuevo.province && mes !== nuevo.mes){
                 res.status(400).send('BAD REQUEST, faltan campos requeridos en el objeto');
