@@ -1,24 +1,24 @@
-var express = require("express");
-var bodyParser = require("body-parser");
+import express from "express";
 
 //var mediaProvincia = require("./index-BRB");
-
-var backendJLN = require('./backend/peticiones');
-
+import { loadBackendJLN } from "./backend/peticiones.js";
+import { handler } from "./frontend/build/handler.js";
 
 
 var app = express();
 var port = process.env.PORT || 12345;
 
-app.use(bodyParser.json());
+
 app.use("/", express.static("./public"));
+app.use(express.json());
+loadBackendJLN(app); //modularizacion JLN
+app.use(handler);
 
-const { response } = require("express");
-var moduloBRB = require("./backend/peticiones-BRB");
+// var moduloBRB = require("./backend/peticiones-BRB");
 
-const BASE_API_URL = "/api/v1";
+// const BASE_API_URL = "/api/v1";
 
-backendJLN(app); //modularizacion JLN
+
 
 
 
@@ -33,10 +33,10 @@ app.listen(port, () => {
   console.log(`Server ready in port ${port}`);
 });
 
-moduloBRB(app);
+// moduloBRB(app);
 
 
 //---------------------------------------BRB-------------------------------------------------------------------
-var datosBRB = [];
-const BRB_URL = BASE_API_URL + "/occupancy-of-accomodation-in-rural-tourism"
+// var datosBRB = [];
+// const BRB_URL = BASE_API_URL + "/occupancy-of-accomodation-in-rural-tourism"
 

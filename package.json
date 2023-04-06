@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "- **Team**\r   - [Bruno Alvaro Rico Barrilero](https://github.com/brico1994)\r   - [Jose Luis Navarro Lopez-Montenegro](https://github.com/josnavlop4)\r - **Project description**: Our source of information are supposed to analize the relation between occupancy in rural tourism and occupancy in camping sites.\r - **Repository**: [gti-sos/SOS2223-19](https://github.com/gti-sos/SOS2223-19)",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "test-BRB": "npx newman run tests/test-BRB-backend.json -e tests/env/localhost2.json",
