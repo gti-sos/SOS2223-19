@@ -1,34 +1,109 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-
-var operacion = require('./index-JLN');
-
+import express from "express";
+import Datastore from "nedb";
 var app = express();
-
-var Datastore = require('nedb');
-const { json } = require("body-parser");
 var db = new Datastore(); 
 
-db.insert(operacion.arrayDatos);
-app.use(bodyParser.json());
+const arrayDatos = [
+    {
+        province: "Almeria",
+        month: "Enero",
+        traveler: 1708.999999997,
+        overnight_stay: 31879.000000006,
+        average_stay: 18.6535985957062
+    },
+    {
+        province: "Almeria",
+        month: "Febrero",
+        traveler: 1515,
+        overnight_stay: 25929.000000002,
+        average_stay: 17.1148514851385
+    },
+    {
+        province: "Almeria",
+        month: "Marzo",
+        traveler: 3045.000000001,
+        overnight_stay: 22178.999999999,
+        average_stay: 7.28374384236181
+    },
+    {
+        province: "Almeria",
+        month: "Abril",
+        traveler: 3992.999999999,
+        overnight_stay: 22219.000000005,
+        average_stay: 5.5644878537467
+    },
+    {
+        province: "Almeria",
+        month: "Mayo",
+        traveler: 7320.418502197,
+        overnight_stay: 25661.207048457,
+        average_stay: 3.50542896430792
+    },
+    {
+        province: "Almeria",
+        month: "Junio",
+        traveler: 13841.000000006,
+        overnight_stay: 41900.000000002,
+        average_stay: 3.02723791633436
+    },
+    {
+        province: "Almeria",
+        month: "Julio",
+        traveler: 24723.999999999,
+        overnight_stay: 94756.999999999,
+        average_stay: 3.83259181362251
+    },
+    {
+        province: "Almeria",
+        month: "Agosto",
+        traveler: 32583.999999996,
+        overnight_stay: 132277.999999994,
+        average_stay: 4.0595998035849
+    },
+    {
+        province: "Almeria",
+        month: "Septiembre",
+        traveler: 16595.999999999,
+        overnight_stay: 61046.000000001,
+        average_stay: 3.67835623041725 
+    },
+    {
+        province: "Almeria",    
+        month: "Octubre",
+        traveler: 13469.999999999,
+        overnight_stay: 53176.999999999,
+        average_stay: 3.94780994803288
+    },
+    {
+        province: "Almeria",
+        month: "Noviembre",
+        traveler: 6827.000000004,
+        overnight_stay: 46545.000000006,
+        average_stay: 6.81778233484382
+    },
+    {
+        province: "Almeria",
+        month: "Diciembre",
+        traveler: 8705.000000002,
+        overnight_stay: 61774.999999997,
+        average_stay: 7.09649626651152
+    }
+];
+
+db.insert(arrayDatos);
+app.use(express.json());
 
 const BASE_API_URL = "/api/v1";
 const JLN = BASE_API_URL + "/occupation-stats";
 
-module.exports = (app) => {
-    //index jln
+function loadBackendJLN(app){
     const camposObligatorios = ["province","month","traveler","overnight_stay","average_stay"];
 
     // Tabla azul y códigos de la verde
     app.post(JLN, (request, response) => {
         const newData = request.body;
 
-        if (request.originalUrl !== "/api/v1/occupation-stats") {
-            response.status(405).send('METHOD NOT ALLOWED');
-            console.log('405');
-            return;
-        
-        } else if (camposObligatorios.find((n) => !newData[n])) {
+        if (camposObligatorios.find((n) => !newData[n])) {
                 response.status(400).send('BAD request, faltan campos requestueridos en el objeto');
                 console.log('400');
 
@@ -56,6 +131,15 @@ module.exports = (app) => {
         }
     });
 
+    app.post(JLN+'/:province', (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
+    });
+
+    app.post(JLN+'/:province/:month', (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
+    });
 
     //obtener array de un valor de un campo en especifico
     app.get(JLN + '', (request, response) => {
@@ -116,7 +200,7 @@ module.exports = (app) => {
 
             if (province && month) {
                 console.log(`New request to /occupation-stats?province="${province}"&month="${month}"`);
-                db.findOne({ province: province, month: month }, (err, array) => {
+                db.findOne({ province: province, month: month },{_id: 0}, (err, array) => {
                     if (err) {
                         response.status(500).send("INTERNAL SERVER ERROR");
                         console.log(err);
@@ -128,10 +212,6 @@ module.exports = (app) => {
                         );
                         console.log(404);
                     } else {
-                        array.map((n) => {
-                            delete n._id;
-                            return n;
-                        }); 
                         if(array.length == 1){
                             response.send(array[0]);
                         }else{
@@ -288,10 +368,9 @@ module.exports = (app) => {
         }
     });
 
-
     //Actualizar dato en especifico
-    app.put(JLN, (request, response) => {
-        const { province, month } = request.query;
+    app.put(JLN+'/:province/:month', (request, response) => {
+        const { province, month } = request.params;
         const newData = request.body;
 
         if(!(province && month)){
@@ -322,6 +401,11 @@ module.exports = (app) => {
                 }
             });
         }
+    });
+
+    app.put(JLN, (request, response) => {
+        response.status(405).send('METHOD NOT ALLOWED');
+        console.log('405');
     });
 
     //Borrar un determinado dato
@@ -477,3 +561,5 @@ module.exports = (app) => {
         response.redirect("https://documenter.getpostman.com/view/25975387/2s93RNwtfj");
     });
 };
+
+export { loadBackendJLN };
