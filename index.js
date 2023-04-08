@@ -1,8 +1,5 @@
 import express from "express";
-<<<<<<< HEAD
 import cors from "cors";
-=======
->>>>>>> b07398615915bf4d5054814f713e2435674e870a
 
 //var mediaProvincia = require("./index-BRB");
 import { loadBackendJLN } from "./backend/peticiones.js";
@@ -21,18 +18,10 @@ app.use(express.json());
 loadBackendJLN(app); //modularizacion JLN
 app.use(handler);
 
-<<<<<<< HEAD
-
 // var moduloBRB = require("./backend/peticiones-BRB");
 
 // const BASE_API_URL = "/api/v1";
 
-=======
-// var moduloBRB = require("./backend/peticiones-BRB");
-
-// const BASE_API_URL = "/api/v1";
-
->>>>>>> b07398615915bf4d5054814f713e2435674e870a
 
 
 
