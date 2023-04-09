@@ -3,8 +3,12 @@
   // @ts-nocheck
   import { onMount } from 'svelte';
   import { dev } from '$app/environment';
-  import { Table } from 'sveltestrap';
+  import { Button, Table } from 'sveltestrap';
   
+  onMount(async () => {
+    await getOccupationStats();
+  });
+
   let API = '/api/v1/occupation-stats';
   
   if (dev) API = 'http://localhost:12345'+API;
@@ -12,6 +16,9 @@
   let Datos = [];
   let newDatosProvince = 'province';
   let newDatosMonth = 'month';
+  let newDatosTrav = 'traveler';
+  let newDatosOS = 'overnight_stay';
+  let newDatosAS= 'average_stay';
 
 
   let result = "";
@@ -33,9 +40,28 @@
     resultStatus = status;  
   }
 
-  onMount(async () => {
-    await getOccupationStats();
-  });
+  async function createOcuppationStats() {
+    resultStatus = result = "";
+    const res = await fetch(API, {
+      method: 'POST',
+      headers:{
+        "Content-Type" : "application/json"
+      },
+      body:JSON.stringify({
+        province: newDatosProvince,
+        month: newDatosMonth,
+        traveler: newDatosTrav,
+        overnight_stay: newDatosOS,
+        average_stay: newDatosAS
+      })
+    });    
+    
+    const status = await res.status;
+    resultStatus = status;
+    if(status==201){
+      getOccupationStats();
+    } 
+  }
 
 </script>
 
@@ -53,14 +79,24 @@
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><input bind:value={newDatosProvince}></td>
+      <td><input bind:value={newDatosMonth}></td>
+      <td><input bind:value={newDatosTrav}></td>
+      <td><input bind:value={newDatosOS}></td>
+      <td><input bind:value={newDatosAS}></td>
+      <td>
+        <Button on:click={createOcuppationStats}>Create</Button>
+      </td>
+    </tr>
     {#each Datos as r}
       <tr>
-        
         <td>{r.province}</td>
         <td>{r.month}</td>
         <td>{r.traveler}</td>
         <td>{r.overnight_stay}</td>
         <td>{r.average_stay}</td>
+        <td>&nbsp</td>
       </tr>
     {/each}
   </tbody>
