@@ -63,6 +63,32 @@
     } 
   }
 
+  async function deleteOcuppationStats(province,month) {
+    resultStatus = result = "";
+    const res = await fetch(API+"/"+province+"/"+month, {
+      method: 'DELETE'
+    });    
+    
+    const status = await res.status;
+    resultStatus = status;
+    if(status==200){
+      getOccupationStats();
+    } 
+  }
+
+  async function deleteAllOcuppationStats() {
+    resultStatus = result = "";
+    const res = await fetch(API, {
+      method: 'DELETE'
+    });    
+    
+    const status = await res.status;
+    resultStatus = status;
+    if(status==200){
+      getOccupationStats();
+    } 
+  }
+
 </script>
 
 <h1>Occupation-stats</h1>
@@ -76,6 +102,9 @@
       <th>Travelers</th>
       <th>Overnight_stay</th>
       <th>Average_stay</th>
+      <td>
+        <Button on:click={deleteAllOcuppationStats}>Delete All</Button>
+      </td>
     </tr>
   </thead>
   <tbody>
@@ -91,12 +120,12 @@
     </tr>
     {#each Datos as r}
       <tr>
-        <td>{r.province}</td>
+        <td><a href="/occupation-stats/{r.province}/{r.month}">{r.province}</a></td>
         <td>{r.month}</td>
         <td>{r.traveler}</td>
         <td>{r.overnight_stay}</td>
         <td>{r.average_stay}</td>
-        <td>&nbsp</td>
+        <Button on:click={deleteOcuppationStats(r.province,r.month)}> Delete</Button>
       </tr>
     {/each}
   </tbody>

@@ -20,6 +20,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"feather-icons": "^4.29.0",
 		"sveltestrap": "^5.10.0"
 	}
 }
