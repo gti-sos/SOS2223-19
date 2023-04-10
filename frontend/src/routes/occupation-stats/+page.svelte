@@ -3,13 +3,13 @@
   // @ts-nocheck
   import { onMount } from 'svelte';
   import { dev } from '$app/environment';
-  import { Button, Table } from 'sveltestrap';
+  import { Button, Table, Alert } from 'sveltestrap';
   
   onMount(async () => {
     await getOccupationStats();
   });
 
-  let API = '/api/v1/occupation-stats';
+  let API = '/api/v2/occupation-stats';
   
   if (dev) API = 'http://localhost:12345'+API;
   
@@ -23,6 +23,9 @@
 
   let result = "";
   let resultStatus = "";
+  
+  let message = "";
+  let c = "";
 
   async function getOccupationStats() {
     resultStatus = result = "";
@@ -58,9 +61,18 @@
     
     const status = await res.status;
     resultStatus = status;
-    if(status==201){
+    if (status==201) {
       getOccupationStats();
-    } 
+    }else if(status==409){
+      message="Error 409, Conflicto, el elemento ya existe"
+      c="warning";
+    }else if(status==400){
+      message="Error 400, Bad Request, rellena todos los campos"
+      c="warning";
+    }else if(status == 500){
+      message="Error 500, Internal Error"
+      c="danger";
+    }
   }
 
   async function deleteOcuppationStats(province,month) {
@@ -73,6 +85,8 @@
     resultStatus = status;
     if(status==200){
       getOccupationStats();
+      message = "Elemento borrado";
+      c = "success";
     } 
   }
 
@@ -84,15 +98,19 @@
     
     const status = await res.status;
     resultStatus = status;
-    if(status==200){
-      getOccupationStats();
-    } 
+    if (status==200) {
+      location.reload();
+      window.alert("ESTAS SEGURO?");
+    }
   }
 
 </script>
 
 <h1>Occupation-stats</h1>
 
+{#if message != ""}
+  <Alert color={c}>{message}</Alert>
+{/if}
 
 <Table>
   <thead>
@@ -103,7 +121,7 @@
       <th>Overnight_stay</th>
       <th>Average_stay</th>
       <td>
-        <Button on:click={deleteAllOcuppationStats}>Delete All</Button>
+        <Button on:click={deleteAllOcuppationStats}>Borrar todo</Button>
       </td>
     </tr>
   </thead>
@@ -115,7 +133,7 @@
       <td><input bind:value={newDatosOS}></td>
       <td><input bind:value={newDatosAS}></td>
       <td>
-        <Button on:click={createOcuppationStats}>Create</Button>
+        <Button on:click={createOcuppationStats}>Añadir</Button>
       </td>
     </tr>
     {#each Datos as r}
@@ -125,23 +143,10 @@
         <td>{r.traveler}</td>
         <td>{r.overnight_stay}</td>
         <td>{r.average_stay}</td>
-        <Button on:click={deleteOcuppationStats(r.province,r.month)}> Delete</Button>
+        <Button on:click={deleteOcuppationStats(r.province,r.month)}> Borrar</Button>
       </tr>
     {/each}
   </tbody>
 </Table>
-<!-- <ul>
-  {#each Datos as r}
-  <li>{r.province}, {r.month}</li>
-  {/each}
-</ul> -->
 
-<!-- {#if resultStatus != ""}
-    <p>
-        Result:
-    </p>
-    <pre>
-{resultStatus}
-{result}
-    </pre>
-{/if} -->
+

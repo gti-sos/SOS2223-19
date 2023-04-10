@@ -93,7 +93,7 @@ const arrayDatos = [
 db.insert(arrayDatos);
 app.use(express.json());
 
-const BASE_API_URL = "/api/v1";
+const BASE_API_URL = "/api/v2";
 const JLN = BASE_API_URL + "/occupation-stats";
 
 function loadBackendJLN(app){
@@ -379,7 +379,7 @@ function loadBackendJLN(app){
             return
 
         } else if (camposObligatorios.find((n) => !newData[n])) {
-            response.status(400).send('BAD request, faltan campos requestueridos en el objeto');
+            response.status(400).send('BAD request, faltan campos requeridos en el objeto');
             console.log('400');
             return;
         } else {

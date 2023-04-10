@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "URLBASE",
-			"value": "http://localhost:12345/api/v1",
+			"value": "http://localhost:12345/api/v2",
 			"type": "default",
 			"enabled": true
 		}

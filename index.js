@@ -20,7 +20,7 @@ app.use(handler);
 
 // var moduloBRB = require("./backend/peticiones-BRB");
 
-// const BASE_API_URL = "/api/v1";
+// const BASE_API_URL = "/api/v2";
 
 
 

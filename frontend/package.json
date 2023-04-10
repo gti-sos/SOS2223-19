@@ -21,6 +21,8 @@
 	"type": "module",
 	"dependencies": {
 		"feather-icons": "^4.29.0",
+		"rollup": "^3.20.2",
+		"svelte-toast": "^1.0.0",
 		"sveltestrap": "^5.10.0"
 	}
 }

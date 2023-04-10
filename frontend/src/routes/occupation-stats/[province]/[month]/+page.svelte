@@ -3,7 +3,7 @@
     // @ts-nocheck
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
-    import { Button, Table } from 'sveltestrap';
+    import { Button, Table, Alert } from 'sveltestrap';
     import { page } from '$app/stores';
     
     onMount(async () => {
@@ -13,7 +13,7 @@
     let province = $page.params.province;
     let month = $page.params.month;
   
-    let API = '/api/v1/occupation-stats/'+province+'/'+month;
+    let API = '/api/v2/occupation-stats/'+province+'/'+month;
     
     if (dev) API = 'http://localhost:12345'+API;
     
@@ -26,10 +26,13 @@
   
     let result = "";
     let resultStatus = "";
+
+    let message = "";
+    let c = "";
   
     async function getOccupationStat() {
       resultStatus = result = "";
-      const res = await fetch("http://localhost:12345/api/v1/occupation-stats/?province="+province+"&month="+month, {
+      const res = await fetch("http://localhost:12345/api/v2/occupation-stats?province="+province+"&month="+month, {
         method: 'GET'
       });
       try {
@@ -46,6 +49,10 @@
       }
       const status = await res.status;
       resultStatus = status;  
+      if (status == 500) {
+        message = "Error 500, Error interno";
+        c = "danger";
+      }
     }
   
     async function updOcuppationStats() {
@@ -66,14 +73,26 @@
       
       const status = await res.status;
       resultStatus = status;
-      if(status==200){
+      if (status == 200) {
+        message = "Actualizado con exito";
+        c = "success";
         getOccupationStat();
+        window.location.href = "http://localhost:5173/occupation-stats";
+      }else if (status == 400) {
+        message = "Error 400, rellena todos los campos";
+        c = "warning";
+      } else if (status == 500) {
+        message = "Error 500, Error interno";
+        c = "danger";
       } 
     }  
   </script>
   
   <h1>Occupation-stats</h1>
   
+  {#if message != ""}
+  <Alert color={c}>{message}</Alert>
+  {/if}
   
   <Table>
     <thead>
@@ -98,4 +117,4 @@
       </tr>
     </tbody>
   </Table>
-  
+
