@@ -14,11 +14,11 @@
   if (dev) API = 'http://localhost:12345'+API;
   
   let Datos = [];
-  let newDatosProvince = 'province';
-  let newDatosMonth = 'month';
-  let newDatosTrav = 'traveler';
-  let newDatosOS = 'overnight_stay';
-  let newDatosAS= 'average_stay';
+  let newDatosProvince = 'provincia';
+  let newDatosMonth = 'mes';
+  let newDatosTrav = 'viajero';
+  let newDatosOS = 'Estancia nocturna';
+  let newDatosAS= 'Media de estancias';
 
 
   let result = "";
@@ -63,14 +63,16 @@
     resultStatus = status;
     if (status==201) {
       getOccupationStats();
+      message="elemento creado"
+      c="success";
     }else if(status==409){
-      message="Error 409, Conflicto, el elemento ya existe"
+      message="Conflicto, el elemento ya existe"
       c="warning";
     }else if(status==400){
-      message="Error 400, Bad Request, rellena todos los campos"
+      message="Rellena todos los campos"
       c="warning";
     }else if(status == 500){
-      message="Error 500, Internal Error"
+      message="Internal Error"
       c="danger";
     }
   }
@@ -115,11 +117,11 @@
 <Table>
   <thead>
     <tr>
-      <th>Province</th>
-      <th>Month</th>
-      <th>Travelers</th>
-      <th>Overnight_stay</th>
-      <th>Average_stay</th>
+      <th>Provincia</th>
+      <th>Mes</th>
+      <th>Viajeros</th>
+      <th>Estancia nocturna</th>
+      <th>Media de estancias</th>
       <td>
         <Button on:click={deleteAllOcuppationStats}>Borrar todo</Button>
       </td>

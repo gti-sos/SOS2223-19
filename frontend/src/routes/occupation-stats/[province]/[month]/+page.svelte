@@ -50,7 +50,10 @@
       const status = await res.status;
       resultStatus = status;  
       if (status == 500) {
-        message = "Error 500, Error interno";
+        message = "Error interno";
+        c = "danger";
+      } else if (status==404){
+        message = "Dato no encontrado";
         c = "danger";
       }
     }
@@ -77,12 +80,12 @@
         message = "Actualizado con exito";
         c = "success";
         getOccupationStat();
-        window.location.href = "http://localhost:5173/occupation-stats";
+        window.location.href = "/occupation-stats";
       }else if (status == 400) {
-        message = "Error 400, rellena todos los campos";
+        message = "Rellena todos los campos";
         c = "warning";
       } else if (status == 500) {
-        message = "Error 500, Error interno";
+        message = "Error interno";
         c = "danger";
       } 
     }  
@@ -97,11 +100,11 @@
   <Table>
     <thead>
       <tr>
-        <th>Province</th>
-        <th>Month</th>
-        <th>Travelers</th>
-        <th>Overnight_stay</th>
-        <th>Average_stay</th>
+        <th>Provincia</th>
+        <th>Mes</th>
+        <th>Viajeros</th>
+        <th>Estancia nocturna</th>
+        <th>Media de estancias</th>
       </tr>
     </thead>
     <tbody>
@@ -112,7 +115,7 @@
         <td><input bind:value={updDatosOS}></td>
         <td><input bind:value={updDatosAS}></td>
         <td>
-          <Button on:click={updOcuppationStats}>Update</Button>
+          <Button on:click={updOcuppationStats}>Actualizar</Button>
         </td>
       </tr>
     </tbody>

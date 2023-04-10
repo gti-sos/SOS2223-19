@@ -96,7 +96,7 @@ app.use(express.json());
 const BASE_API_URL = "/api/v2";
 const JLN = BASE_API_URL + "/occupation-stats";
 
-function loadBackendJLN(app){
+function loadBackendJLNv2(app){
     const camposObligatorios = ["province","month","traveler","overnight_stay","average_stay"];
 
     // Tabla azul y códigos de la verde
@@ -562,4 +562,4 @@ function loadBackendJLN(app){
     });
 };
 
-export { loadBackendJLN };
+export { loadBackendJLNv2 };
