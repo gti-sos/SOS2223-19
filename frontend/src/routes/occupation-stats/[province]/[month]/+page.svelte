@@ -32,7 +32,7 @@
   
     async function getOccupationStat() {
       resultStatus = result = "";
-      const res = await fetch("http://localhost:12345/api/v2/occupation-stats?province="+province+"&month="+month, {
+      const res = await fetch("/api/v2/occupation-stats?province="+province+"&month="+month, {
         method: 'GET'
       });
       try {

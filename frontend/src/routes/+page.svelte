@@ -7,7 +7,8 @@
         <li><a href="https://github.com/josnavlop4">Jose Luis Navarro Lopez-Montenegro: Estadísticas de ocupación</a></li>
         </ul>
         </li>
-        <li><strong>Descripcion del proyecto</strong>: Our source of information are supposed to analize the relation between occupancy in rural tourism and occupancy in camping sites.</li>
+        <li><strong>Descripcion del proyecto</strong>: Our source of information are supposed to analize the relation between occupancy in rural tourism and occupancy in camping sites.
+        Nuestra fuente de informacion analiza la relacion entre ocupacion en turismo rural y en zonas de camping</li>
         <li><strong>Repositorio</strong>: <a href="https://github.com/gti-sos/SOS2223-19">gti-sos/SOS2223-19</a></li>
         <li><strong>URL</strong>: <a href="http://sos2223-19.appspot.com/">http://sos2223-19.appspot.com/ </a></li>
         <li><strong>APIs</strong>:<ul>
