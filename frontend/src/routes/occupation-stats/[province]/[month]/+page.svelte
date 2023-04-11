@@ -3,7 +3,7 @@
     // @ts-nocheck
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
-    import { Button, Table, Alert } from 'sveltestrap';
+    import { Button, Table, Alert, Icon } from 'sveltestrap';
     import { page } from '$app/stores';
     
     onMount(async () => {
@@ -53,6 +53,9 @@
         message = "Error interno";
         c = "danger";
       } else if (status==404){
+        message = "Dato no encontrado";
+        c = "danger";
+      } else if (status==502){
         message = "Dato no encontrado";
         c = "danger";
       }

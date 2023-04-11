@@ -1,5 +1,6 @@
 <html>
     <body>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
         <h1>SOS2223-19</h1>
         <ul>
         <li><strong>Equipo</strong><ul>
