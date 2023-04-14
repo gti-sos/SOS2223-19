@@ -6,7 +6,7 @@ import { loadBackendJLNv1 } from "./backend/peticiones-v1.js";
 import { loadBackendJLNv2 } from "./backend/peticiones-v2.js";
 import { handler } from "./frontend/build/handler.js";
 
-import {loadBackendBRBv1} from "./backend/peticiones-BRB";
+import {loadBackendBRBv1} from "./backend/peticiones-BRBv1.js";
 
 var app = express();
 
