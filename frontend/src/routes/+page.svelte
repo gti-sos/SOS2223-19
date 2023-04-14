@@ -14,6 +14,7 @@
         <li><strong>URL</strong>: <a href="http://sos2223-19.appspot.com/">http://sos2223-19.appspot.com/ </a></li>
         <li><strong>APIs</strong>:<ul>
             <li><a href="/api/v2/occupation-stats">Estadisticas de ocupacion </a>   (creado por <a href="https://github.com/josnavlop4">Jose Luis Navarro López-Montenegro</a>)</li> 
+            <li><a href="/api/v2/occupancy-of-accomodation-in-rural-tourism">Estadisticas de acomodacion en turismo rural </a>   (creado por <a href="https://github.com/brico1994">Jose Luis Navarro López-Montenegro</a>)</li> 
         </ul>
         <li><strong>Documentacion</strong>:<ul>
         <li><a href="https://documenter.getpostman.com/view/25975387/2s93RNwtfj">http://sos2223-19.appspot.com/api/v1/occupation-stats/docs </a>   (creado por <a href="https://github.com/josnavlop4">Jose Luis Navarro López-Montenegro</a>)</li>
