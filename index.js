@@ -6,6 +6,7 @@ import { loadBackendJLNv1 } from "./backend/peticiones-v1.js";
 import { loadBackendJLNv2 } from "./backend/peticiones-v2.js";
 import { handler } from "./frontend/build/handler.js";
 
+import {loadBackendBRBv1} from "./backend/peticiones-BRB";
 
 var app = express();
 
@@ -21,7 +22,9 @@ loadBackendJLNv1(app);
 loadBackendJLNv2(app); //modularizacion JLN
 app.use(handler);
 
-// var moduloBRB = require("./backend/peticiones-BRB");
+loadBackendBRBv1(app);
+
+
 
 // const BASE_API_URL = "/api/v2";
 
