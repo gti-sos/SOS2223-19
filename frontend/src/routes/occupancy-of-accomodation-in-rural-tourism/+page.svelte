@@ -241,7 +241,7 @@
         </tr>
         {#each Datos as r}
           <tr>
-            <td><a href="/occupation-stats/{r.province}/{r.month}">{r.province}</a></td>
+            <td><a href="/occupancy-of-accomodation-in-rural-tourism/{r.province}/{r.month}">{r.province}</a></td>
             <td>{r.month}</td>
             <td>{r.traveller}</td>
             <td>{r.overnight_stay}</td>

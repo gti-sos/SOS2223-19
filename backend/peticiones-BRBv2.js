@@ -110,10 +110,10 @@ function loadBackendBRBv2(app) {
 
         if (Object.keys(query).length === 0) {
             // Obtener todos los datos
-            console.log("New request to /occupation-stats");
+            console.log("New request to /rural turism");
             ddbb.find({}, (err, arrayDatos) => {
                 if (err) {
-                    console.log(`Error getting /occupation-stats: ${err}`);
+                    console.log(`Error getting /rural turism: ${err}`);
                     response.status(500).send({ error: "Error interno del servidor" });
                 } else {
                     console.log(`Returned ${arrayDatos.length}`);
@@ -126,7 +126,7 @@ function loadBackendBRBv2(app) {
             });
         } else if(request.query.offset || request.query.limit){
             const { offset, limit } = request.query;
-            console.log(`New request to /occupation-stats?offset="${offset}"&limit="${limit}"`);
+            console.log(`New request to /rural turism?offset="${offset}"&limit="${limit}"`);
             if (!offset || !limit) {
                 return response.status(400).send('faltan parametros requestueridos');
             } else {
@@ -162,7 +162,7 @@ function loadBackendBRBv2(app) {
             const average_stay = parseFloat(query.average_stay);
 
             if (province && month) {
-                console.log(`New request to /occupation-stats?province="${province}"&month="${month}"`);
+                console.log(`New request to /occupancy-of-accomodation-in-rural-tourism?province="${province}"&month="${month}"`);
                 ddbb.findOne({ province: province, month: month }, (err, array) => {
                     if (err) {
                         response.status(500).send("INTERNAL SERVER ERROR");
@@ -175,10 +175,6 @@ function loadBackendBRBv2(app) {
                         );
                         console.log(404);
                     } else {
-                        array.map((n) => {
-                            delete n._id;
-                            return n;
-                        }); 
                         if(array.length == 1){
                             response.send(array[0]);
                         }else{
@@ -409,7 +405,7 @@ function loadBackendBRBv2(app) {
                 console.log('400');
             } else {
                 ddbb.insert(nuevo);
-                console.log('New POST to /occupation-stats');
+                console.log('New POST to /ruralturism');
                 response.status(201).send("created");
             }
         });

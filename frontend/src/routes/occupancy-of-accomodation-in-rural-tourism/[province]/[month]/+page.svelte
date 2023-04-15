@@ -32,7 +32,7 @@
   
     async function getRuralTourism() {
       resultStatus = result = "";
-      const res = await fetch("/api/v2/occupation-stats?province="+province+"&month="+month, {
+      const res = await fetch("/api/v2/occupancy-of-accomodation-in-rural-tourism?province="+province+"&month="+month, {
         method: 'GET'
       });
       try {
@@ -83,7 +83,7 @@
         message = "Actualizado con exito";
         c = "success";
         getRuralTourism();
-        window.location.href = "/getRuralTourism";
+        window.location.href = "/occupancy-of-accomodation-in-rural-tourism";
       }else if (status == 400) {
         message = "Rellena todos los campos";
         c = "warning";
