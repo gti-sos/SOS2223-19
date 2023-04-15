@@ -4,9 +4,11 @@ import cors from "cors";
 
 import { loadBackendJLNv1 } from "./backend/peticiones-v1.js";
 import { loadBackendJLNv2 } from "./backend/peticiones-v2.js";
+import {loadBackendBRBv1} from "./backend/peticiones-BRBv1.js";
+import {loadBackendBRBv2} from "./backend/peticiones-BRBv2.js";
 import { handler } from "./frontend/build/handler.js";
 
-import {loadBackendBRBv1} from "./backend/peticiones-BRBv1.js";
+
 
 var app = express();
 
@@ -21,6 +23,7 @@ app.use(express.json());
 loadBackendJLNv1(app);
 loadBackendJLNv2(app); //modularizacion JLN
 loadBackendBRBv1(app);
+loadBackendBRBv2(app);
 app.use(handler);
 
 

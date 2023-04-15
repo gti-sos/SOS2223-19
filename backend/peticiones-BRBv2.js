@@ -1,4 +1,7 @@
 import express from "express";
+import Datastore from 'nedb';
+var app = express();
+var ddbb = new Datastore();
 
 var arrayBRB = [
     {
@@ -87,18 +90,15 @@ var arrayBRB = [
     }
 ];
 
-var app = express();
 
-import Datastore from 'nedb';
-var ddbb = new Datastore();
-ddbb.insert(arrayBRB.datosInicialesBruno);
+ddbb.insert(arrayBRB);
 
 app.use(express.json());
 
 const BASE_API_URL = "/api/v2";
 const BRB_URL = BASE_API_URL + "/occupancy-of-accomodation-in-rural-tourism";
 
-function loadBackendBRBv1(app) {
+function loadBackendBRBv2(app) {
     //-----------------------------------------gets-------------------------------------------------------------
     app.get(BRB_URL+"/docs",(req,res)=>{
         res.redirect("https://documenter.getpostman.com/view/25989970/2s93RNyEu7");
