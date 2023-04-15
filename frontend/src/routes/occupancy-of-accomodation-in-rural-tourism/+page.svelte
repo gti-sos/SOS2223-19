@@ -230,10 +230,10 @@
   
           <td>
             <div class="button-container">
-              <Button color="success" outline size="sm" on:click={createOcuppationStats}>
+              <Button color="success" outline size="sm" on:click={createRuralTourism}>
                 <Icon name="plus" class="icon"/> Añadir
               </Button>
-              <Button color="danger" outline size="sm" on:click={deleteAllOcuppationStats}>
+              <Button color="danger" outline size="sm" on:click={deleteAllRuralTourism}>
                 <Icon name="trash" class="icon"/> Elimina todo
               </Button>
             </div>
@@ -248,7 +248,7 @@
             <td>{r.average_stay}</td>
             <td>
               <div class="button-container">
-                <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(r.province,r.month)}>
+                <Button color="danger" outline size="sm" on:click={() => deleteRuralTousism(r.province,r.month)}>
                   <Icon name="x" class="icon" /> Eliminar
                 </Button>
               </div>
