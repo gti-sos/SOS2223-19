@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-//var mediaProvincia = require("./index-BRB");
+
 import { loadBackendJLNv1 } from "./backend/peticiones-v1.js";
 import { loadBackendJLNv2 } from "./backend/peticiones-v2.js";
 import { handler } from "./frontend/build/handler.js";
@@ -20,9 +20,10 @@ app.use(express.json());
 
 loadBackendJLNv1(app);
 loadBackendJLNv2(app); //modularizacion JLN
+loadBackendBRBv1(app);
 app.use(handler);
 
-loadBackendBRBv1(app);
+
 
 
 
