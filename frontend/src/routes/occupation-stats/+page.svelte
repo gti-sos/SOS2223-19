@@ -1,9 +1,10 @@
 <script lang="ts">
-
   // @ts-nocheck
+
   import { onMount } from 'svelte';
   import { dev } from '$app/environment';
-  import { Button, Table, Alert, Icon, Toast, ToastBody, ToastHeader } from 'sveltestrap';
+  import { Button, Table, Alert, Icon } from 'sveltestrap';
+  import {} from "./style.css";
   
   onMount(async () => {
     await getOccupationStats();
@@ -13,44 +14,74 @@
   
   if (dev) API = 'http://localhost:12345'+API;
   
-  let Datos = [];
+  
   let newDatosProvince = '';
   let newDatosMonth = '';
   let newDatosTrav = '';
   let newDatosOS = '';
   let newDatosAS= '';
 
-  const colors = [
-    'primary',
-    'secondary',
-    'success',
-    'danger',
-    'warning',
-    'info',
-    'light',
-    'dark'
-  ];
+  let searchProvince = "";
+  let searchMonth = "";
+  let searchTrav = "";
+  let searchOS = "";
+  let searchAS = "";
 
+  let datos= [];
   let result = "";
   let resultStatus = "";
   
   let message = "";
   let c = "";
 
+  let limit = 5;
+  let offset=0;
+
   async function getOccupationStats() {
     resultStatus = result = "";
-    const res = await fetch(API, {
+    const res = await fetch(API+`?limit=${limit}&offset=${offset}`, {
       method: 'GET'
     });
     try {
       const data = await res.json();
       result = JSON.stringify(data, null, 2);
-      Datos = data;
+      datos= data;
     } catch (error) {
       console.log(`Error parsing result: ${error}`);
     }
     const status = await res.status;
     resultStatus = status;  
+  }
+  
+  async function searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS) {
+    resultStatus = result = "";
+    const params = { province: searchProvince, month: searchMonth, traveler: searchTrav, overnight_stay: searchOS, average_stay: searchAS };
+    const validParams = Object.fromEntries(Object.entries(params).filter(value => value !== ""));
+    const query = new URLSearchParams(validParams).toString();
+    const res = await fetch("/api/v1/occupation-stats"+`?${query}`, {
+      method: "GET"
+    });
+    
+    try {
+      const data = await res.json();
+      result = JSON.stringify(data, null, 2);
+      datos.concat(data);
+    } catch (error) {
+      console.log(`Error parsing result: ${error}`);
+    }
+    const status = await res.status;
+    resultStatus = status;
+    if (status == 200) {
+
+      message = "Elemento encontrado";
+      c = "success";
+    } else if (status == 404) {
+      message = "Elemento no encontrado";
+      c = "danger";
+    }else if (status == 500) {
+      message = "Error interno";
+      c = "danger";
+    }
   }
 
   async function createOcuppationStats() {
@@ -115,6 +146,28 @@
       window.alert("ESTAS SEGURO?");
     }
   }
+    async function previousPage() {
+        offset -= limit;
+        if(offset<0){
+            message = "No puedes retroceder estás en el principio de la lista de elementos";
+            c = "danger";
+            offset += limit;
+        }
+        else {
+            await getOccupationStats();
+        }
+    }
+    async function nextPage() {
+        offset += limit;
+        if(offset>=12){
+            message = "No hay más elementos para mostrar";
+            c = "danger";
+            offset -= limit;
+        }
+        else{
+          await getOccupationStats();            
+        }        
+    }
 
 </script>
 
@@ -126,91 +179,19 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-  .table-container {
-    margin-top: 20px;
-  }
-  
-  .table-container input {
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .table-container th {
-    text-align: left;
-    background-color: #f7fafc;
-    color: #718096;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px;
-    vertical-align: middle;
-  }
-  
-  .table-container td {
-    text-align: left;
-    font-size: 14px;
-    padding: 10px;
-    vertical-align: middle;
-  }
-  
-  .table-container tbody tr:nth-child(even) {
-    background-color: #f7fafc;
-  }
-  
-  .table-container tbody tr:hover {
-    background-color: #edf2f7;
-  }
-  
-  .table-container .button-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .table-container .button-container button {
-    font-size: 14px;
-    border-radius: 5px;
-    border: none;
-    color: #fff;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-  
-  .table-container .button-container button:hover {
-    opacity: 0.8;
-  }
-  
-  .table-container .button-container button.success {
-    background-color: #48bb78;
-  }
-  
-  .table-container .button-container button.danger {
-    background-color: #f56565;
-  }
-  
-  .table-container .button-container button.outline {
-    background-color: transparent;
-    color: #718096;
-    border: 1px solid #718096;
-  }
-  
-  .table-container .button-container button.outline:hover {
-    background-color: #718096;
-    color: #fff;
-  }
-  
-  .table-container .button-container button .icon {
-    margin-right: 5px;
-  }
-</style>
-
 <div class="table-container">
   <Table>
     <thead>
+      <tr>
+        <td><input bind:value={searchProvince} placeholder="Introduce provincia"></td>
+        <td><input bind:value={searchMonth} placeholder="Introduce mes"></td>
+        <td><input bind:value={searchTrav} placeholder="Introduce nº de viajeros"></td>
+        <td><input bind:value={searchOS} placeholder="Introduce nº de estancias nocturnas"></td>
+        <td><input bind:value={searchAS} placeholder="Introduce media de estancias"></td>
+        <td>
+            <Button color="success" on:click={searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS)}>Buscar dato</Button>
+        </td>
+      </tr>
       <tr>
         <th>Provincia</th>
         <th>Mes</th>
@@ -229,34 +210,37 @@
         <td><input bind:value={newDatosAS} placeholder="Introduce media de estancias"></td>
 
         <td>
-          <div class="button-container">
-            <Button color="success" outline size="sm" on:click={createOcuppationStats}>
-              <Icon name="plus" class="icon"/> Añadir
-            </Button>
-            <Button color="danger" outline size="sm" on:click={deleteAllOcuppationStats}>
-              <Icon name="trash" class="icon"/> Elimina todo
-            </Button>
-          </div>
+          <Button color="success" outline size="sm" on:click={createOcuppationStats}>
+            <Icon name="plus" class="icon"/>
+          </Button>
+          <Button color="danger" outline size="sm" on:click={deleteAllOcuppationStats}>
+            <Icon name="trash" class="icon"/> 
+          </Button>
         </td>
       </tr>
-      {#each Datos as r}
+      
+      {#each datos as dato}
         <tr>
-          <td><a href="/occupation-stats/{r.province}/{r.month}">{r.province}</a></td>
-          <td>{r.month}</td>
-          <td>{r.traveler}</td>
-          <td>{r.overnight_stay}</td>
-          <td>{r.average_stay}</td>
+          <td><a href="/occupation-stats/{dato.province}/{dato.month}">{dato.province}</a></td>
+          <td>{dato.month}</td>
+          <td>{dato.traveler}</td>
+          <td>{dato.overnight_stay}</td>
+          <td>{dato.average_stay}</td>
           <td>
-            <div class="button-container">
-              <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(r.province,r.month)}>
-                <Icon name="x" class="icon" /> Eliminar
-              </Button>
-            </div>
+            <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(dato.province,dato.month)}>
+              <Icon name="x" class="icon" />
+            </Button>
           </td>
         </tr>
       {/each}
     </tbody>
   </Table>
+
+  <div id="buttons" style="text-align:center;">
+    <Button color="primary" outline size="sm" on:click={previousPage}><Icon name="arrow-bar-left" class="icon" /></Button>
+    <Button color="primary" outline size="sm" on:click={nextPage}><Icon name="arrow-bar-right" class="icon" /></Button>
+  </div>
+
 </div>
 
 

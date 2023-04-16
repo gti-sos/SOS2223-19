@@ -91,7 +91,10 @@
         message = "Error interno";
         c = "danger";
       } 
-    }  
+    }
+
+   
+
   </script>
   
   <h1>Occupation-stats</h1>
