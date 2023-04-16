@@ -52,20 +52,34 @@
     const status = await res.status;
     resultStatus = status;  
   }
-  
+  let searchres=[];
+  let datos1=[];
   async function searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS) {
     resultStatus = result = "";
     const params = { province: searchProvince, month: searchMonth, traveler: searchTrav, overnight_stay: searchOS, average_stay: searchAS };
     const validParams = Object.fromEntries(Object.entries(params).filter(value => value !== ""));
     const query = new URLSearchParams(validParams).toString();
-    const res = await fetch("/api/v1/occupation-stats"+`?${query}`, {
+    const res = await fetch(API+`?${query}`, {
       method: "GET"
     });
     
     try {
       const data = await res.json();
       result = JSON.stringify(data, null, 2);
-      datos.concat(data);
+      let data1 = Object.values(data);
+
+      if (data1.length === 5) {
+        const parsedData = [{
+          province: data1[0],
+          month: data1[1],
+          traveler: parseFloat(data1[2]),
+          overnight_stay: parseFloat(data1[3]),
+          average_stay: parseFloat(data1[4])
+        }];
+        searchres = parsedData;
+      }else{
+        searchres = data1;
+      }
     } catch (error) {
       console.log(`Error parsing result: ${error}`);
     }
@@ -168,7 +182,6 @@
           await getOccupationStats();            
         }        
     }
-
 </script>
 
 <h1>Occupation-stats</h1>
@@ -186,22 +199,36 @@
         <td><input bind:value={searchProvince} placeholder="Introduce provincia"></td>
         <td><input bind:value={searchMonth} placeholder="Introduce mes"></td>
         <td><input bind:value={searchTrav} placeholder="Introduce nº de viajeros"></td>
-        <td><input bind:value={searchOS} placeholder="Introduce nº de estancias nocturnas"></td>
+        <td><input bind:value={searchOS} placeholder="Introduce nº de pernoctaciones"></td>
         <td><input bind:value={searchAS} placeholder="Introduce media de estancias"></td>
-        <td>
-            <Button color="success" on:click={searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS)}>Buscar dato</Button>
-        </td>
+        <Button color="primary" outline size="sm" on:click={() => searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS)}>
+          <Icon name="search" class="icon"/>
+        </Button>
       </tr>
       <tr>
         <th>Provincia</th>
         <th>Mes</th>
         <th>Viajeros</th>
-        <th>Estancia nocturna</th>
+        <th>Pernoctación</th>
         <th>Media de estancias</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
+        {#each searchres as dato}
+          <tr>
+            <td><a href="/occupation-stats/{dato.province}/{dato.month}">{dato.province}</a></td>
+            <td>{dato.month}</td>
+            <td>{dato.traveler}</td>
+            <td>{dato.overnight_stay}</td>
+            <td>{dato.average_stay}</td>
+            <td>
+              <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(dato.province,dato.month)}>
+                <Icon name="x" class="icon" />
+              </Button>
+            </td>
+          </tr>
+        {/each}
       <tr>
         <td><input bind:value={newDatosProvince} placeholder="Introduce provincia"></td>
         <td><input bind:value={newDatosMonth} placeholder="Introduce mes"></td>
