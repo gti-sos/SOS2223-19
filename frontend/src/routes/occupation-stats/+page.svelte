@@ -36,6 +36,8 @@
 
   let limit = 5;
   let offset=0;
+  let currentPage = 0;
+  let totalPages = 2;
 
   async function getOccupationStats() {
     resultStatus = result = "";
@@ -168,7 +170,8 @@
             offset += limit;
         }
         else {
-            await getOccupationStats();
+          currentPage--;
+          await getOccupationStats();
         }
     }
     async function nextPage() {
@@ -179,6 +182,7 @@
             offset -= limit;
         }
         else{
+          currentPage++;
           await getOccupationStats();            
         }        
     }
@@ -264,8 +268,12 @@
   </Table>
 
   <div id="buttons" style="text-align:center;">
-    <Button color="primary" outline size="sm" on:click={previousPage}><Icon name="arrow-bar-left" class="icon" /></Button>
-    <Button color="primary" outline size="sm" on:click={nextPage}><Icon name="arrow-bar-right" class="icon" /></Button>
+    {#if currentPage > 0}
+      <Button color="primary" outline size="sm" on:click={previousPage}><Icon name="arrow-bar-left" class="icon" /></Button>
+    {/if}
+    {#if currentPage<totalPages }
+      <Button color="primary" outline size="sm" on:click={nextPage}><Icon name="arrow-bar-right" class="icon" /></Button>
+    {/if}
   </div>
 
 </div>
