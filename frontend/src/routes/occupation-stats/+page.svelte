@@ -15,6 +15,8 @@
   if (dev) API = 'http://localhost:12345'+API;
   
   
+  let alertOpen = true;
+
   let newDatosProvince = '';
   let newDatosMonth = '';
   let newDatosTrav = '';
@@ -41,7 +43,7 @@
 
   async function getOccupationStats() {
     resultStatus = result = "";
-    const res = await fetch(API+`?limit=${limit}&offset=${offset}`, {
+    const res = await fetch(API+`?offset=${offset}&limit=${limit}`, {
       method: 'GET'
     });
     try {
@@ -54,8 +56,36 @@
     const status = await res.status;
     resultStatus = status;  
   }
+
+  async function getLoadInitialData() {
+    resultStatus = result = "";
+    const res = await fetch(API+'/loadInitialData', {
+      method: 'GET'
+    });
+    try {
+      const data = await res.json();
+      result = JSON.stringify(data, null, 2);
+      datos= data;
+    } catch (error) {
+      console.log(`Error parsing result: ${error}`);
+    }
+    const status = await res.status;
+    resultStatus = status;
+    if (status==200) {
+      getOccupationStats();
+      message="Datos cargados correctamente"
+      c="success";
+     }else if(status==400){
+      message="Los datos ya están cargados"
+      c="warning";
+     }else if(status==500){
+      message="Error interno"
+      c="danger";
+     }
+
+  }
+
   let searchres=[];
-  let datos1=[];
   async function searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS) {
     resultStatus = result = "";
     const params = { province: searchProvince, month: searchMonth, traveler: searchTrav, overnight_stay: searchOS, average_stay: searchAS };
@@ -165,8 +195,6 @@
     async function previousPage() {
         offset -= limit;
         if(offset<0){
-            message = "No puedes retroceder estás en el principio de la lista de elementos";
-            c = "danger";
             offset += limit;
         }
         else {
@@ -177,8 +205,6 @@
     async function nextPage() {
         offset += limit;
         if(offset>=12){
-            message = "No hay más elementos para mostrar";
-            c = "danger";
             offset -= limit;
         }
         else{
@@ -215,7 +241,11 @@
         <th>Viajeros</th>
         <th>Pernoctación</th>
         <th>Media de estancias</th>
-        <th>Acciones</th>
+        <td>
+          <Button color="primary" outline size="sm" on:click={() => getLoadInitialData()}>
+            <Icon name="arrow-counterclockwise" class="icon" />
+          </Button>
+        </td>
       </tr>
     </thead>
     <tbody>
