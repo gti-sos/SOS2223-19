@@ -14,8 +14,6 @@
   
   if (dev) API = 'http://localhost:12345'+API;
   
-  
-  let alertOpen = true;
 
   let newDatosProvince = '';
   let newDatosMonth = '';
@@ -36,10 +34,10 @@
   let message = "";
   let c = "";
 
-  let limit = 5;
+  let limit =10;
   let offset=0;
   let currentPage = 0;
-  let totalPages = 2;
+  let totalPages = 1;
 
   async function getOccupationStats() {
     resultStatus = result = "";
