@@ -195,8 +195,6 @@
     async function previousPage() {
         offset -= limit;
         if(offset<0){
-            message = "No puedes retroceder estás en el principio de la lista de elementos";
-            c = "danger";
             offset += limit;
         }
         else {
@@ -207,8 +205,6 @@
     async function nextPage() {
         offset += limit;
         if(offset>=12){
-            message = "No hay más elementos para mostrar";
-            c = "danger";
             offset -= limit;
         }
         else{
