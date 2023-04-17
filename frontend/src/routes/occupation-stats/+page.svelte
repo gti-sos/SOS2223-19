@@ -38,6 +38,7 @@
   let offset=0;
   let currentPage = 0;
   let totalPages = 1;
+  
 
   async function getOccupationStats() {
     resultStatus = result = "";
