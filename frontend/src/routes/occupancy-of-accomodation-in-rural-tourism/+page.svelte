@@ -12,6 +12,14 @@
     let API = '/api/v2/occupancy-of-accomodation-in-rural-tourism';
     
     if (dev) API = 'http://localhost:12345'+API;
+
+  
+
+  let searchProvince = "";
+  let searchMonth = "";
+  let searchTrav = "";
+  let searchOS = "";
+  let searchAS = "";
     
     let Datos = [];
     let newDatosProvince = '';
@@ -121,6 +129,51 @@ let currentPage = 1;
         c = "success";
       } 
     }
+
+    let searchres=[];
+  async function searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS) {
+    resultStatus = result = "";
+    const params = { province: searchProvince, month: searchMonth, traveler: searchTrav, overnight_stay: searchOS, average_stay: searchAS };
+    const validParams = Object.fromEntries(Object.entries(params).filter(value => value !== ""));
+    const query = new URLSearchParams(validParams).toString();
+    const res = await fetch(API+`?${query}`, {
+      method: "GET"
+    });
+    
+    try {
+      const data = await res.json();
+      result = JSON.stringify(data, null, 2);
+      let data1 = Object.values(data);
+
+      if (data1.length === 5) {
+        const parsedData = [{
+          province: data1[0],
+          month: data1[1],
+          traveler: parseFloat(data1[2]),
+          overnight_stay: parseFloat(data1[3]),
+          average_stay: parseFloat(data1[4])
+        }];
+        searchres = parsedData;
+      }else{
+        searchres = data1;
+      }
+    } catch (error) {
+      console.log(`Error parsing result: ${error}`);
+    }
+    const status = await res.status;
+    resultStatus = status;
+    if (status == 200) {
+
+      message = "Elemento encontrado";
+      c = "success";
+    } else if (status == 404) {
+      message = "Elemento no encontrado";
+      c = "danger";
+    }else if (status == 500) {
+      message = "Error interno";
+      c = "danger";
+    }
+  }
   
     async function deleteAllRuralTourism() {
       resultStatus = result = "";
@@ -281,19 +334,46 @@ let currentPage = 1;
     }*/
   </style> 
   <div class="table-container">
-    
     <Table>
       <thead>
+        <tr>
+          <td><input bind:value={searchProvince} placeholder="Introduce provincia"></td>
+          <td><input bind:value={searchMonth} placeholder="Introduce mes"></td>
+          <td><input bind:value={searchTrav} placeholder="Introduce nº de viajeros"></td>
+          <td><input bind:value={searchOS} placeholder="Introduce nº de pernoctaciones"></td>
+          <td><input bind:value={searchAS} placeholder="Introduce media de estancias"></td>
+          <Button color="primary" outline size="sm" on:click={() => searchData(searchProvince, searchMonth, searchTrav, searchOS, searchAS)}>
+            <Icon name="search" class="icon"/>
+          </Button>
+        </tr>
         <tr>
           <th>Provincia</th>
           <th>Mes</th>
           <th>Viajeros</th>
-          <th>Estancia nocturna</th>
+          <th>Pernoctación</th>
           <th>Media de estancias</th>
-          <th>Acciones</th>
+          <td>
+            <Button color="primary" outline size="sm" on:click={() => getLoadInitialData()}>
+              <Icon name="arrow-counterclockwise" class="icon" />
+            </Button>
+          </td>
         </tr>
       </thead>
       <tbody>
+          {#each searchres as dato}
+            <tr>
+              <td><a href="/occupation-stats/{dato.province}/{dato.month}">{dato.province}</a></td>
+              <td>{dato.month}</td>
+              <td>{dato.traveler}</td>
+              <td>{dato.overnight_stay}</td>
+              <td>{dato.average_stay}</td>
+              <td>
+                <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(dato.province,dato.month)}>
+                  <Icon name="x" class="icon" />
+                </Button>
+              </td>
+            </tr>
+          {/each}
         <tr>
           <td><input bind:value={newDatosProvince} placeholder="Introduce provincia"></td>
           <td><input bind:value={newDatosMonth} placeholder="Introduce mes"></td>
@@ -301,7 +381,7 @@ let currentPage = 1;
           <td><input bind:value={newDatosOS} placeholder="Introduce nº de estancias nocturnas"></td>
           <td><input bind:value={newDatosAS} placeholder="Introduce media de estancias"></td>
   
-          <td>
+    <td>
             <div class="button-container">
               <Button color="success" outline size="sm" on:click={createRuralTourism}>
                 <Icon name="plus" class="icon"/> Añadir
@@ -312,48 +392,9 @@ let currentPage = 1;
             </div>
           </td>
         </tr>
-        {#each Datos as r}
-          <tr>
-            <td><a href="/occupancy-of-accomodation-in-rural-tourism/{r.province}/{r.month}">{r.province}</a></td>
-            <td>{r.month}</td>
-            <td>{r.traveller}</td>
-            <td>{r.overnight_stay}</td>
-            <td>{r.average_stay}</td>
-            <td>
-              <div class="button-container">
-                <Button color="danger" outline size="sm" on:click={() => deleteRuralTousism(r.province,r.month)}>
-                  <Icon name="x" class="icon" /> Eliminar
-                </Button>
-              </div>
-              
-            </td>
-          </tr>
-        {/each}
       </tbody>
     </Table>
     
-    <th style="text-align: center;">
-      <Button outline color="primary" on:click="{() => searchContact()}">Buscar</Button>
-    </th>
-    <Pagination size="lg" ariaLabel="Page navigation example">
-      <PaginationItem>
-        <PaginationLink first on:click={() => goToPage(1)} href="#" />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink previous on:click={() => goToPage(currentPage-1)} href="#" />
-      </PaginationItem>
-      {#each Array.from({ length: Math.ceil(Datos.length/itemsPerPage) }, (_, i) => i+1) as page}
-        <PaginationItem>
-          <PaginationLink on:click={() => goToPage(page)} href="#">{page}</PaginationLink>
-        </PaginationItem>
-      {/each}
-      <PaginationItem>
-        <PaginationLink next on:click={() => goToPage(currentPage+1)} href="#" />
-      </PaginationItem>
-      <PaginationItem>
-        <PaginationLink last on:click={() => goToPage(Math.ceil(Datos.length/itemsPerPage))} href="#" />
-      </PaginationItem>
-    </Pagination>
   </div>
   
   
