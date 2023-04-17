@@ -3,7 +3,7 @@
     // @ts-nocheck
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
-    import { Button, Table, Alert, Icon, Toast, ToastBody, ToastHeader } from 'sveltestrap';
+    import { Button, Table, Alert, Icon,Pagination, PaginationItem, PaginationLink } from 'sveltestrap';
     
     onMount(async () => {
       await getRuralTourism();
@@ -52,6 +52,26 @@
       const status = await res.status;
       resultStatus = status;  
     }
+
+  function goToPage(page) {
+  currentPage = page;
+  const offset = (currentPage - 1) * itemsPerPage;
+  const url = `http://localhost:8080/api/v2/andalusian-bicycle-plans?offset=${offset}&limit=${itemsPerPage}`;
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      bicyclePlans = data;
+    })
+    .catch(error => {
+      console.error('Error fetching bicycle plans:', error);
+    })
+    .finally(() => {
+      updateUrl();
+    });
+}
+
+const itemsPerPage = 10;
+let currentPage = 1;
   
     async function createRuralTourism() {
       resultStatus = result = "";
@@ -115,6 +135,59 @@
         window.alert("ESTAS SEGURO?");
       }
     }
+
+    async function searchContact(province, year, from, to, traveller, overnight_stay, average_stay) {
+    busqueda = [];
+    let url = `${API}`;
+    let query_params = [];
+    if (province) {
+      query_params.push(`province=${province}`);
+    }
+    if (year) {
+      query_params.push(`year=${year}`);
+    }
+    
+     
+     if(traveller){
+      query_params.push(`traveller=${bicycle_over}`);
+     }
+     if(overnight_stay){
+      query_params.push(`overnight_stay=${motorized_percentage_over}`);
+     }
+     if(average_stay){
+      query_params.push(`average_stay=${population_over}`);
+     }
+    if (from !== undefined && to !== undefined) {
+      if (from <= to) {
+        query_params.push(`from=${from}`);
+        query_params.push(`to=${to}`);
+      } else {
+        msgVisible = true;
+        color = "danger";
+        checkMSG = `El año de inicio debe ser menor o igual al año de fin`;
+        return;
+      }
+    }
+    if (query_params.length > 0) {
+      url += `?${query_params.join("&")}`;
+    }
+    const res = await fetch(url);
+    if (res.ok) {
+      console.log("Buscando datos...");
+      search = true;
+      const json = await res.json();
+      busqueda = json;
+      console.log(busqueda);
+      console.log(search);
+      msgVisible = true;
+      color = "success";
+      checkMSG = `Busqueda realizada con exito`;
+    } else {
+      msgVisible = true;
+      color = "danger";
+      checkMSG = `No se encontraron resultados para los parametros ingresados`;
+    }
+  }
   
   </script>
   
@@ -170,7 +243,7 @@
       align-items: center;
     }
     
-    .table-container .button-container button {
+    /*.table-container .button-container button {
       font-size: 14px;
       border-radius: 5px;
       border: none;
@@ -205,10 +278,10 @@
     
     .table-container .button-container button .icon {
       margin-right: 5px;
-    }
-  </style>
-  
+    }*/
+  </style> 
   <div class="table-container">
+    
     <Table>
       <thead>
         <tr>
@@ -252,11 +325,35 @@
                   <Icon name="x" class="icon" /> Eliminar
                 </Button>
               </div>
+              
             </td>
           </tr>
         {/each}
       </tbody>
     </Table>
+    
+    <th style="text-align: center;">
+      <Button outline color="primary" on:click="{() => searchContact()}">Buscar</Button>
+    </th>
+    <Pagination size="lg" ariaLabel="Page navigation example">
+      <PaginationItem>
+        <PaginationLink first on:click={() => goToPage(1)} href="#" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink previous on:click={() => goToPage(currentPage-1)} href="#" />
+      </PaginationItem>
+      {#each Array.from({ length: Math.ceil(Datos.length/itemsPerPage) }, (_, i) => i+1) as page}
+        <PaginationItem>
+          <PaginationLink on:click={() => goToPage(page)} href="#">{page}</PaginationLink>
+        </PaginationItem>
+      {/each}
+      <PaginationItem>
+        <PaginationLink next on:click={() => goToPage(currentPage+1)} href="#" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink last on:click={() => goToPage(Math.ceil(Datos.length/itemsPerPage))} href="#" />
+      </PaginationItem>
+    </Pagination>
   </div>
   
   
