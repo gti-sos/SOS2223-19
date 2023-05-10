@@ -53,7 +53,6 @@
     }
 
     async function loadChart(graphData){
-
         Highcharts.chart('container', {
             chart: {
                 type: 'area'
@@ -103,10 +102,16 @@
 </script>
 
 <main>
-    <h1>GRAPH</h1>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
         </p>
     </figure>
 </main>
+
+<style>
+    #container {
+        margin: 50px 400px;
+        padding-top: 50px;
+    }
+</style>

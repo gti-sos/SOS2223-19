@@ -8,6 +8,7 @@
     import { dev } from '$app/environment';
 
     let API = '/api/v2';
+    let API1 = 'https://sos2223-14.appspot.com/api/v2/andalusia-tourism-situation-surveys';
   
     if (dev) API = 'http://localhost:12345'+API;
 
@@ -42,7 +43,7 @@
             result = JSON.stringify(data, null, 2);
             datos= data;
             datos.sort((a, b) => monthOrder[a.month] - monthOrder[b.month]);
-            getDatosBRN();
+            getDatosRebeca();
         } catch (error) {
             console.log(`Error parsing result: ${error}`);
         }
@@ -50,9 +51,9 @@
         resultStatus = status;  
     }
 
-    async function getDatosBRN() {
+    async function getDatosRebeca() {
         resultStatus = result = "";
-        const res = await fetch(API + '/occupancy-of-accomodation-in-rural-tourism' , {
+        const res = await fetch(API1 , {
             method: 'GET'
         });
         try {
@@ -69,37 +70,45 @@
     }
 
     function loadChart(dat,dat1) {
-        zingchart.render({
-        id: 'mi-grafica',
-        data: {
-            type: 'bar',
-            title: {
-                text: 'Media de ocupacion en alojamientos rurales y en campings'
-            },
-            scaleX: {
-                labels: dat.map(d => d.province + ' ' + d.month)
-            },
-            series: [
-                {
-                    values: dat.map(d => d.average_stay),
-                    lineColor: '#FF5733', 
-                    text: 'Media de ocupacion en campings'
-                },
-                {
-                    values: dat1.map(d => d.average_stay),
-                    lineColor: '#33FFB0',
-                    text: 'Media de ocupacion en alojamientos rurales'
-                }
-            ],
-            legend: {
-                alpha: 1,
-                borderColor: '#CCCCCC',
-                marginRight: '50px',
-                marginTop: '55px',
-                shadow: false,
-                toggleAction: 'remove',
-            }
+        
+        const datosConcretos = [];
+
+        for (let i = 0; i < 12; i++) {
+            const datoConcreto = dat1[i];
+            datosConcretos.push(datoConcreto);
         }
+
+        zingchart.render({
+            id: 'mi-grafica',
+            data: {
+                type: 'area',
+                title: {
+                    text: 'Estadisticas de ocupacion en campings y encuesta de coyuntura turistica en Almería'
+                },
+                scaleX: {
+                    labels: dat.map(d => d.province + ' ' + d.month)
+                },
+                series: [
+                    {
+                        values: dat.map(d => d.average_stay),
+                        lineColor: '#FF5733', 
+                        text: 'Media de ocupacion en campings'
+                    },
+                    {
+                        values: datosConcretos.map(d => d.average_stay),
+                        lineColor: '#33FFB0',
+                        text: 'Media de ocupacion en alojamientos rurales'
+                    }
+                ],
+                legend: {
+                    alpha: 1,
+                    borderColor: '#CCCCCC',
+                    marginRight: '50px',
+                    marginTop: '55px',
+                    shadow: false,
+                    toggleAction: 'remove',
+                }
+            }
         });
     }
 

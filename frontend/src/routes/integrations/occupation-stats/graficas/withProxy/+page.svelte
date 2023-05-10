@@ -8,7 +8,7 @@
     import { dev } from '$app/environment';
 
     let API = '/api/v2/occupation-stats';
-    let API1 = 'https://sos2223-14.appspot.com/apt-occ';	
+    let API1 = 'https://sos2223-19.appspot.com/apt-occ';	
 
     if (dev) API = 'http://localhost:12345'+API;
 
@@ -71,46 +71,43 @@
     }
 
     function loadChart(dat,dat1) {
+
+        const datoConcreto = dat1.find(d => d.province === "Almería" && d.year === 2022);
+
         zingchart.render({
         id: 'mi-grafica',
         data: {
             type: 'mixed',
+            plot: {
+                clustered: true,
+                margin: 'dynamic'
+            },
             title: {
                 text: 'Comparacion de datos de Almeria en 2022 general y durante los meses'
             },
             scaleX: {
-                labels: dat.map(d => d.month), // Etiquetas para los meses
+                labels: ['Media de ocupacion en campings durante los meses', 'Media de ocupacion en alojamientos rurales en Almería en 2022'],
                 item: {
-                    autoAlign: true // Alineación automática de las etiquetas
+                    autoAlign: true
                 }
             },
             series: [
                 {
-                    type: 'line', // Tipo de serie de línea
-                    values: dat.map(d => d.average_stay),
-                    lineColor: '#FF5733', // Color de línea para la primera lista
-                    text: 'Media de ocupacion en campings'
+                    type: 'line',
+                    values: dat.map(d => d.traveler),
+                    lineColor: '#FF5733'
                 },
                 {
-                    type: 'bar', // Tipo de serie de barra
-                    values: [dat1.find(d => d.province === 'Almeria' && d.year === 2022).average_stay],
-                    backgroundColor: '#33FFB0', // Color de fondo de la barra para la segunda lista
-                    text: 'Media de ocupacion en alojamientos rurales en Almería en 2022',
-                    barWidth: '50px', // Ancho de la barra
-                    tooltip: {
-                        text: '%v' // Texto del tooltip
-                    }
+                    type: 'bar',
+                    values: [datoConcreto.traveler],
+                    backgroundColor: '#33FFB0'
                 }
             ],
-            legend: {
-                alpha: 1,
-                borderColor: '#CCCCCC',
-                marginRight: '50px',
-                marginTop: '55px',
-                shadow: false,
-                toggleAction: 'remove',
-            }
+            plotarea: {
+                margin: 'dynamic' 
+            },
         }
+
         });
     }
 
@@ -121,8 +118,8 @@
 
 <style>
     #mi-grafica {
-        margin: 50px auto;
-        padding-top: 50px;
+        margin: 50px 400px; 
+        padding-top: 40px;
     }
 </style>
 
