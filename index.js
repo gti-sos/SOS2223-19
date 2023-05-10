@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import request from "request";
 
 
 import { loadBackendJLNv1 } from "./backend/peticiones-v1.js";
@@ -8,17 +9,26 @@ import {loadBackendBRBv1} from "./backend/peticiones-BRBv1.js";
 import {loadBackendBRBv2} from "./backend/peticiones-BRBv2.js";
 import { handler } from "./frontend/build/handler.js";
 
-
-
 var app = express();
 
 app.use(cors());
 
-var port = process.env.PORT || 12345;
-
-
 app.use("/", express.static("./public"));
 app.use(express.json());
+
+var port = process.env.PORT || 12345;
+
+//proxy JLN
+
+var paths = "/apt-occ";
+var apiServerHost = "https://sos2223-14.appspot.com/api/v2/apartment-occupancy-surveys";
+
+app.use(paths, function(req,res){
+  var url = apiServerHost + req.url;
+  req.pipe(request(url)).pipe(res);
+});
+
+
 
 loadBackendJLNv1(app);
 loadBackendJLNv2(app); //modularizacion JLN

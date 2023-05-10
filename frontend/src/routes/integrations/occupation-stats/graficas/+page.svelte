@@ -1,8 +1,8 @@
 <main>
     <body>
       <div class="button-container">
-          <a class="button" href="/withProxy">Con Proxy</a>
-          <a class="button" href="/withoutProxy">Sin Proxy</a>
+          <a class="button" href="graficas/withProxy">Con Proxy</a>
+          <a class="button" href="graficas/withoutProxy">Sin Proxy</a>
         </div>
     </body>
   </main>

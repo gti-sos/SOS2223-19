@@ -7,8 +7,9 @@
     import { onMount } from 'svelte';
     import { dev } from '$app/environment';
 
-    let API = '/api/v2';
-  
+    let API = '/api/v2/occupation-stats';
+    let API1 = 'https://sos2223-14.appspot.com/apt-occ';	
+
     if (dev) API = 'http://localhost:12345'+API;
 
     let datos = [];
@@ -34,7 +35,7 @@
 
     async function getDatosJLN() {
         resultStatus = result = "";
-        const res = await fetch(API + '/occupation-stats' , {
+        const res = await fetch(API, {
             method: 'GET'
         });
         try {
@@ -42,7 +43,7 @@
             result = JSON.stringify(data, null, 2);
             datos= data;
             datos.sort((a, b) => monthOrder[a.month] - monthOrder[b.month]);
-            getDatosBRN();
+            getDatosCris();
         } catch (error) {
             console.log(`Error parsing result: ${error}`);
         }
@@ -50,17 +51,18 @@
         resultStatus = status;  
     }
 
-    async function getDatosBRN() {
+    async function getDatosCris() {
         resultStatus = result = "";
-        const res = await fetch(API + '/occupancy-of-accomodation-in-rural-tourism' , {
+        const res = await fetch(API1, {
             method: 'GET'
         });
         try {
+
             const data = await res.json();
             result1 = JSON.stringify(data, null, 2);
             datos1 = data;
-            datos1.sort((a, b) => monthOrder[a.month] - monthOrder[b.month]);
             loadChart(datos,datos1);
+
         } catch (error) {
             console.log(`Error parsing result: ${error}`);
         }
@@ -72,23 +74,32 @@
         zingchart.render({
         id: 'mi-grafica',
         data: {
-            type: 'bar',
+            type: 'mixed',
             title: {
-                text: 'Media de ocupacion en alojamientos rurales y en campings'
+                text: 'Comparacion de datos de Almeria en 2022 general y durante los meses'
             },
             scaleX: {
-                labels: dat.map(d => d.province + ' ' + d.month)
+                labels: dat.map(d => d.month), // Etiquetas para los meses
+                item: {
+                    autoAlign: true // Alineación automática de las etiquetas
+                }
             },
             series: [
                 {
+                    type: 'line', // Tipo de serie de línea
                     values: dat.map(d => d.average_stay),
                     lineColor: '#FF5733', // Color de línea para la primera lista
                     text: 'Media de ocupacion en campings'
                 },
                 {
-                    values: dat1.map(d => d.average_stay),
-                    lineColor: '#33FFB0', // Color de línea para la segunda lista
-                    text: 'Media de ocupacion en alojamientos rurales'
+                    type: 'bar', // Tipo de serie de barra
+                    values: [dat1.find(d => d.province === 'Almeria' && d.year === 2022).average_stay],
+                    backgroundColor: '#33FFB0', // Color de fondo de la barra para la segunda lista
+                    text: 'Media de ocupacion en alojamientos rurales en Almería en 2022',
+                    barWidth: '50px', // Ancho de la barra
+                    tooltip: {
+                        text: '%v' // Texto del tooltip
+                    }
                 }
             ],
             legend: {
@@ -103,10 +114,9 @@
         });
     }
 
-    onMount(async () => {
+    onMount(async() => {
         await getDatosJLN();
     });
-
 </script>
 
 <style>

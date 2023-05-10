@@ -253,7 +253,7 @@ let currentPage = 1;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
   
   <style>
-    .table-container {
+    /* .table-container {
       margin-top: 20px;
     }
     
@@ -294,7 +294,7 @@ let currentPage = 1;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-    }
+    } */
     
     /*.table-container .button-container button {
       font-size: 14px;
@@ -333,7 +333,7 @@ let currentPage = 1;
       margin-right: 5px;
     }*/
   </style> 
-  <div class="table-container">
+  <!-- <div class="table-container">
     <Table>
       <thead>
         <tr>
@@ -368,9 +368,9 @@ let currentPage = 1;
               <td>{dato.overnight_stay}</td>
               <td>{dato.average_stay}</td>
               <td>
-                <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(dato.province,dato.month)}>
-                  <Icon name="x" class="icon" />
-                </Button>
+                  <Button color="danger" outline size="sm" on:click={() => deleteOcuppationStats(dato.province,dato.month)}>
+                    <Icon name="x" class="icon" />
+                  </Button>
               </td>
             </tr>
           {/each}
@@ -395,7 +395,7 @@ let currentPage = 1;
       </tbody>
     </Table>
     
-  </div>
+  </div> -->
   
   
   
