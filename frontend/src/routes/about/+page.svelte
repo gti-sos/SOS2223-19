@@ -1,9 +1,7 @@
 <main>
     <body>
-        <h1> Todas las graficas han sido realizadas con Zingchart</h1>
         <div class="button-container">
-            <a class="button" href="graficas/withProxy">Con Proxy</a>
-            <a class="button" href="graficas/withoutProxy">Sin Proxy</a>
+            <a class="button" href="https://www.youtube.com/watch?v=B9leCDe7LuM">Estadisticas de Ocupacion</a>
         </div>
     </body>
 </main>

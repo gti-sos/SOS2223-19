@@ -1,7 +1,7 @@
 <script>
     //@ts-nocheck
     import { onMount } from 'svelte';
-    import { Button, Table, Alert, Icon } from 'sveltestrap';
+    import { Table } from 'sveltestrap';
 
     let datos = [];
     let datos1 = [];
